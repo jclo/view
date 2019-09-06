@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hyperscript templates</title>
+    <link rel="stylesheet" href="">
+    <style>
+    </style>
+    <script src="../lib/view.js"></script>
+    <script>
+      window.onload = function() {
+
+        const Ooo = View.Component({
+          render: function() {
+            var h = this.$hyperscript;
+
+            return h('div', { class: 'ooo' },
+              h('p', { style: 'font-weight: bold; font-style: italic;' }, 'My paragraph ...')
+            );
+          }
+        });
+
+        const Aaa = View.Component({
+          render: function() {
+            var h = this.$hyperscript;
+
+            return h('div', null,
+              h('h2', null, 'My Subtitle'),
+              h(Ooo, { name: 'Ooo', options: { title: 'ooo' } })
+            );
+          }
+        });
+
+        const Bbb = View.Component({
+          render: function() {
+            var h = this.$hyperscript;
+
+            return h('div', null,
+              h('h1', null, 'My Title'),
+              h(Aaa, { name: 'Aaa', options: { title: 'aaa' } })
+            );
+          }
+        });
+
+        const view = View.render({
+          el: '#app',
+          children: { '<Bbb />': { fn: Bbb, options: { title: 'zzz' }} },
+          template: `
+            <div><Bbb /></div>
+          `,
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <div id='app'></div>
+  </body>
+</html>
