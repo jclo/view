@@ -306,8 +306,8 @@
       const argu = _extractArgs(...args);
 
       // Set the duration:
-      const duration = _.isNumber(argu.duration)
-        ? args.duration
+      const duration = _.isNumber(argu.duration) && argu.duration > 0
+        ? argu.duration
         : (function(arg) {
           if (arg === 'fast') return FAST;
           if (arg === 'slow') return SLOW;

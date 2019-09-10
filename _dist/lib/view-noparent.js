@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * View v0.0.0
+ * View v0.0.1
  *
  * A companion View library for building web applications.
  * (you can download it from npm or github repositories)
@@ -625,7 +625,7 @@
     // -- Local variables
 
 
-    // -- Public Static Methods ------------------------------------------------
+    // -- Private & Public Static Methods --------------------------------------
 
     View = {
 
@@ -633,7 +633,7 @@
        * Returns the internal objects for testing purpose.
        *
        * @method ()
-       * @public
+       * @private
        * @param {}            -,
        * @returns {Object}    returns TV tree,
        * @since 0.0.0
@@ -698,7 +698,7 @@
     };
 
     // Attaches a constant to View that provides the version of the lib.
-    View.VERSION = '0.0.0';
+    View.VERSION = '0.0.1';
   }());
   /* eslint-enable one-var, semi-style, no-underscore-dangle */
 
@@ -2277,8 +2277,8 @@
         const argu = _extractArgs(...args);
 
         // Set the duration:
-        const duration = _.isNumber(argu.duration)
-          ? args.duration
+        const duration = _.isNumber(argu.duration) && argu.duration > 0
+          ? argu.duration
           : (function(arg) {
             if (arg === 'fast') return FAST;
             if (arg === 'slow') return SLOW;

@@ -10,7 +10,7 @@
 
 [![NPM install][npm-install-image]][npm-install-url]
 
-`View` is a companion View library for building web applications. On the opposite of React, VueJS and Angular, View focuses on the viewing operations only. Besides, `View` has a very fast learning curve has it doesn't introduce any new directives, pseudo-code, etc. Thus, `View` is only intended to create web components, insert them into the DOM and update them.
+`View` is a companion View library for building web applications. On the opposite of React, VueJS and Angular, View focuses on the viewing operations only. Besides, `View` has a very fast learning curve as it doesn't introduce any new directives, pseudo-code, etc. Thus, `View` is only intended to create web components, insert them into the DOM and update them.
 
 If you master, HTML, CSS, Javascript and the DOM, you are almost done!
 
@@ -30,7 +30,7 @@ const C = View.Component({
   },
 });
 ```
-It is just a Javascript object that inherits from `View Component`. In its minimal form, it contains only a `render` method that returns an XML string.
+It is just a Javascript object that inherits from `View Component`. In its minimalist form, it contains only a `render` method that returns an XML string.
 
 When your `View Component` is defined, you just have to attach it to the DOM through the static method render:
 
@@ -147,7 +147,7 @@ The property `el` could be an `id`, a `class` or a `DOM element`.
 
 The property `children` associates the tag `<C />` to the `View Component` `C`.
 
-The property template is just an XML string. A template always consists of a set of HTML tags surrounded by a `div`, `header` or `footer` tag.
+The property template is just an XML string. A template always consists of a set of HTML tags surrounded by a `div`, a `header` or a `footer` tag.
 
 If it isn't the case, the template is ignored and `View.render()` prints a `warning message` to the browser's console.
 
@@ -204,7 +204,7 @@ This component `C` inherits from `View.Component`. In its simplest form, it impl
 
 From now, we call `template` The XML string returned by the method `render`.
 
-A View component template is always a set of HTML tags surrounded by a `div`, `header` or `footer` tags.
+A View component template is always a set of HTML tags surrounded by a `div`, a `header` or a `footer` tag.
 
 If it isn't the case, the component won't be inserted into the DOM and a warning message will be displayed to the browser's console.
 
@@ -397,7 +397,7 @@ this.$('.plus').on('click', () => {
 });
 ```
 
-increments the variable `counter` and inserts its new value between the tags `<h1>/h1>`.
+increments the variable `counter` and inserts its new value between the tags `<h1></h1>`.
 
 And, when the user clicks on the `button -`, the code:
 
@@ -407,7 +407,7 @@ this.$('.minus').on('click', () => {
   this.$('h1').text(counter);
 });
 ```
-decrements the variable `counter` and inserts its new value between the tags `<h1>/h1>`.
+decrements the variable `counter` and inserts its new value between the tags `<h1></h1>`.
 
 The `events` method is automatically called when the component is instantiated.
 
@@ -516,7 +516,7 @@ Now, you know how to send and receive messages to `View components`.
 
 ### Hyperscript
 
-Until now, we defined a template has an XML string. But, `View.Component` implements an `hyperscript` converter. Thus, if you prefer, you can define your template like this:
+Until now, we defined a template as an XML string. `View.Component` implements an `hyperscript` converter. Thus, if you prefer, you can define your template like this:
 
 ```javascript
 const H = View.Component({
@@ -530,7 +530,7 @@ const H = View.Component({
 });
 ```
 
-The syntax if the following:
+The syntax is the following:
 
 ```javascript
 h('HTML tag', 'attribute', 'value')
@@ -627,7 +627,7 @@ view.$listen('footer:feedback', (message) => {
 view.$emit('footer:setCopyright', 'Copyright (c) John Doe. All rights reserved.');
 ```
 
-`$emit` sends an event to the `footer` component with a `payload`. `$listen` waits for a response.
+`$emit` sends an event to the `footer` component with a `payload`. `$listen` and waits for a response.
 
 
 ## Reference

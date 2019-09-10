@@ -55,7 +55,7 @@
   // -- Local variables
 
 
-  // -- Public Static Methods ------------------------------------------------
+  // -- Private & Public Static Methods --------------------------------------
 
   View = {
 
@@ -63,7 +63,7 @@
      * Returns the internal objects for testing purpose.
      *
      * @method ()
-     * @public
+     * @private
      * @param {}            -,
      * @returns {Object}    returns TV tree,
      * @since 0.0.0
