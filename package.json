@@ -1,6 +1,6 @@
 {
   "name": "@mobilabs/view",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A companion View library for building web applications",
   "main": "index.js",
   "bin": {},
@@ -9,7 +9,7 @@
     "watch": "gulp watch",
     "makedist": "gulp makedist",
     "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha ./test/main.js",
-    "check-coverage": "nyc check-coverage --statements 10 --branches 10 --functions 10 --lines 10",
+    "check-coverage": "nyc check-coverage --statements 10 --branches 5 --functions 10 --lines 10",
     "display-coverage": "opener ./coverage/lcov-report/index.html",
     "report-coverage": "nyc report --reporter=text-lcov | coveralls",
     "report": "nyc report"
@@ -40,7 +40,7 @@
     "coveralls": "3.0.6",
     "cross-env": "5.2.1",
     "del": "5.1.0",
-    "eslint": "6.3.0",
+    "eslint": "6.4.0",
     "eslint-config-airbnb-base": "14.0.0",
     "eslint-plugin-import": "2.18.2",
     "gulp": "4.0.2",

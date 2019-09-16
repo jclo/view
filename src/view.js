@@ -21,6 +21,7 @@
  * Public Static Methods:
  *  . noConflict                  returns a reference to this View object,
  *  . render                      renders a View into the DOM,
+ *  . restore                     restores the View Component to its initial state,
  *
  *
  *
@@ -106,6 +107,19 @@
       // options.components: { 'tag': { component: ref, options: {} } }
       // options.template: 'XMLString',
       return R.render(options);
+    },
+
+    /**
+     * Restores the View Component to its initial state.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Object}        the view object,
+     * @returns {Boolean}     returns true if the restore succeeds,
+     * @since 0.0.0
+     */
+    restore(view) {
+      return R.restore(view);
     },
 
     // append() {

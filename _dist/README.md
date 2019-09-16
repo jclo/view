@@ -639,7 +639,8 @@ Static Methods                  | Description
 ```
 ```
 Component(options)              | returns the child component constructor,
-render                          | renders the components into the DOM and returns the root component object,
+render({...})                   | renders the components in the DOM and returns the root component object,
+restore(view),                  | restores the DOM to its initial state,
 ```
 
 
@@ -697,6 +698,7 @@ $().text()                      | returns the contents of the selected element,
 $().text('string')              | replaces the text contents and returns this,
 
 $().clone(deep)                 | clones the selected node if deep is false, clones node and childs if deep is true,
+$().firstChild()                | returns the first child,
 $().insertChildBefore(n, c)     | inserts the child 'n' before the child 'c'  and returns this,
 $().removeChild(child)          | removes the child 'child'  and returns this,
 $().replaceChild(n, c)          | replaces the child 'c' by the child 'n'  and returns this,

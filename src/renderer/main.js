@@ -10,11 +10,14 @@
  *  . _attachMessenger            attaches the messenger object to all childs,
  *  . _filter                     filters the parameters passed to View.render(),
  *  . _attachTemplateDOM          attaches the XML string to the DOM,
+ *  . _componenterize             transforms the selected node to a View Component,
  *  . _render                     attaches the root comp and its childs to the DOM,
+ *  . _restore                    restores the View Component to its initial state,
  *
  *
  * Public Static Methods:
  *  . render                      attaches the root comp and its childs to the DOM,
+ *  . restore                     restores the View Component to its initial state,
  *
  *
  *
@@ -161,6 +164,74 @@
   }
 
   /**
+   * Transforms the selected node to a View Component.
+   *
+   * @function (arg1)
+   * @private
+   * @param {Object}        the optional parameters,
+   * @returns {}            -,
+   * @since 0.0.0
+   */
+  function _componenterize(options) {
+    const opt = _filter(options);
+
+    // Check if the node exists in the DOM. if not return null.
+    if (opt.el === 'body') return null;
+
+    // Extract an XML string from the selected node.
+    let node;
+    if (_.isString(opt.el)) {
+      node = document.querySelector(opt.el);
+    } else {
+      node = opt.el;
+    }
+    const xmlNode0 = node.outerHTML;
+
+    // If the node has an id, save it and remove it from the node
+    // as View.Component adds an id.
+    const id = node.getAttribute('id');
+    if (id) {
+      node.removeAttribute('id');
+    }
+    const xmlNode = node.outerHTML;
+
+    // Create a View.Component from the XML string (without id) of the
+    // selected node. Then, replace the current node by the new generated
+    // node in the DOM.
+    // Extend the components methods with the passed-in methods, if any.
+    let m = {};
+    if (options.methods) {
+      m = options.methods;
+    }
+    const C = View.Component(_.extend(m, {
+      render() {
+        return xmlNode;
+      },
+    }));
+    const view = C();
+    const xmlNewNode = view._renderer();
+    const template = document.createElement('template');
+    template.innerHTML = xmlNewNode;
+    const newNode = template.content.firstChild;
+    node.parentNode.replaceChild(newNode, node);
+
+    // If the initial node has an id, replace the randowmly generated id by
+    // the initial id.
+    if (id) {
+      newNode.setAttribute('id', id);
+      view.id = id;
+    }
+
+    // Attach Messenger and the XML string of the initial node to 'view'
+    // and return it.
+    // The XML string of the initial node is saved because View provides a
+    // method View.restore to returns the node to its initial state.
+    view._mess = Messenger();
+    view._initialXMLNode = xmlNode0;
+    return view;
+  }
+
+  /**
    * Attaches the root component and its children to the DOM.
    *
    * @function (arg1)
@@ -172,6 +243,12 @@
   function _render(options) {
     const opt = _filter(options)
         ;
+
+    if (!options.children && !options.template) {
+      // If there is no children and no template, we componenterize the
+      // selected node!
+      return _componenterize(options);
+    }
 
     if (!opt.children) {
       // No components. Insert template only!
@@ -203,6 +280,26 @@
     return rootc;
   }
 
+  /**
+   * Restores the View Component to its initial state.
+   *
+   * @function (arg1)
+   * @private
+   * @param {String}        the view object,
+   * @returns {Boolean}     returns true if it succeeds,
+   * @since 0.0.0
+   */
+  function _restore(view) {
+    if (view._initialXMLNode) {
+      const template = document.createElement('template');
+      template.innerHTML = view._initialXMLNode;
+      const iNode = template.content.firstChild;
+      view.$()[0].parentNode.replaceChild(iNode, view.$()[0]);
+      return true;
+    }
+    return false;
+  }
+
 
   // -- Public Methods -------------------------------------------------------
 
@@ -220,6 +317,20 @@
     render(params) {
       return _render(params);
     },
+
+    /**
+     * Restores the View Component to its initial state.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Object}        the view object,
+     * @returns {Boolean}     returns true if the restore succeeds,
+     * @since 0.0.0
+     */
+    restore(view) {
+      return _restore(view);
+    },
+
     // append() {
     //   // Appends a child component to the view.
     //   return this;

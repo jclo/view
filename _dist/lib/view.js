@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * View v0.0.1
+ * View v0.0.2
  *
  * A companion View library for building web applications.
  * (you can download it from npm or github repositories)
@@ -153,6 +153,7 @@
           /* eslint-disable-next-line no-param-reassign */
           object[keys[i]] = methods[keys[i]];
         }
+        return object;
       },
 
       /**
@@ -597,6 +598,7 @@
    * Public Static Methods:
    *  . noConflict                  returns a reference to this View object,
    *  . render                      renders a View into the DOM,
+   *  . restore                     restores the View Component to its initial state,
    *
    *
    *
@@ -682,6 +684,19 @@
         return R.render(options);
       },
 
+      /**
+       * Restores the View Component to its initial state.
+       *
+       * @method (arg1)
+       * @public
+       * @param {Object}        the view object,
+       * @returns {Boolean}     returns true if the restore succeeds,
+       * @since 0.0.0
+       */
+      restore(view) {
+        return R.restore(view);
+      },
+
       // append() {
       //   // Appends a child component to the view.
       //   R.append();
@@ -702,7 +717,7 @@
     };
 
     // Attaches a constant to View that provides the version of the lib.
-    View.VERSION = '0.0.1';
+    View.VERSION = '0.0.2';
   }());
   /* eslint-enable one-var, semi-style, no-underscore-dangle */
 
@@ -834,6 +849,7 @@
    *  . text                        gets/sets the text contents of the element,
    *
    *  . clone                       clones the selected element,
+   *  . firstChild                  returns the firstChild element,
    *  . insertChildBefore           inserts a child element before another child element,
    *  . removeChild                 removes the passed-in child element,
    *  . replaceChild                replaces a child by another,
@@ -858,6 +874,7 @@
    *
    *  . on                          attachs an event listener to the current node,
    *  . off                         removes an event listener from the current node,
+   *  . trigger                     fires the event associated to the selected node,
    *
    *
    *
@@ -895,7 +912,9 @@
 
     function $(selector) {
       const cid = this.id;
-      let el;
+      let el
+        , el0
+        ;
 
       /**
        * Select a child element.
@@ -964,8 +983,8 @@
        * @since 0.0.0
        */
       const firstParent = function() {
-        if (this.root) {
-          this[0] = this.root;
+        if (this._root) {
+          this[0] = this._root;
         }
         return this;
       };
@@ -1217,6 +1236,19 @@
           return this[0].cloneNode(deep);
         }
         return this[0].cloneNode(true);
+      };
+
+      /**
+       * Returns the firstChild.
+       *
+       * @method ()
+       * @public
+       * @param {}            -,
+       * @returns {Object}    returns the firstChild,
+       * @since 0.0.0
+       */
+      const firstChild = function() {
+        return this[0].firstChild;
       };
 
       /**
@@ -1539,6 +1571,19 @@
         return this;
       };
 
+      /**
+       * Fires the event associated to the selected node.
+       *
+       * @method (arg1)
+       * @public
+       * @param {String}      the event name,
+       * @returns {Boolean}   returns false if preventDefault was activated
+       * @since 0.0.0         otherwise true,
+       */
+      const trigger = function(event) {
+        return this[0].dispatchEvent(new Event(event));
+      };
+
       // -- Main
       if (selector) {
         // Selects the first element that matches the selector(s):
@@ -1546,11 +1591,13 @@
       } else {
         // Selects the entire 'web component':
         el = document.querySelector(`#${cid}`);
+        el0 = el;
       }
 
       return {
         0: el,
         id: el ? el.id : null,
+        _root: el0,
         // getElement: getElement,
         select,
         selectChild,
@@ -1570,6 +1617,7 @@
         replaceWith,
         text,
         clone,
+        firstChild,
         insertChildBefore,
         removeChild,
         replaceChild,
@@ -1589,6 +1637,7 @@
         animate,
         on,
         off,
+        trigger,
       };
     }
 
@@ -2852,11 +2901,14 @@
    *  . _attachMessenger            attaches the messenger object to all childs,
    *  . _filter                     filters the parameters passed to View.render(),
    *  . _attachTemplateDOM          attaches the XML string to the DOM,
+   *  . _componenterize             transforms the selected node to a View Component,
    *  . _render                     attaches the root comp and its childs to the DOM,
+   *  . _restore                    restores the View Component to its initial state,
    *
    *
    * Public Static Methods:
    *  . render                      attaches the root comp and its childs to the DOM,
+   *  . restore                     restores the View Component to its initial state,
    *
    *
    *
@@ -3001,6 +3053,74 @@
     }
 
     /**
+     * Transforms the selected node to a View Component.
+     *
+     * @function (arg1)
+     * @private
+     * @param {Object}        the optional parameters,
+     * @returns {}            -,
+     * @since 0.0.0
+     */
+    function _componenterize(options) {
+      const opt = _filter(options);
+
+      // Check if the node exists in the DOM. if not return null.
+      if (opt.el === 'body') return null;
+
+      // Extract an XML string from the selected node.
+      let node;
+      if (_.isString(opt.el)) {
+        node = document.querySelector(opt.el);
+      } else {
+        node = opt.el;
+      }
+      const xmlNode0 = node.outerHTML;
+
+      // If the node has an id, save it and remove it from the node
+      // as View.Component adds an id.
+      const id = node.getAttribute('id');
+      if (id) {
+        node.removeAttribute('id');
+      }
+      const xmlNode = node.outerHTML;
+
+      // Create a View.Component from the XML string (without id) of the
+      // selected node. Then, replace the current node by the new generated
+      // node in the DOM.
+      // Extend the components methods with the passed-in methods, if any.
+      let m = {};
+      if (options.methods) {
+        m = options.methods;
+      }
+      const C = View.Component(_.extend(m, {
+        render() {
+          return xmlNode;
+        },
+      }));
+      const view = C();
+      const xmlNewNode = view._renderer();
+      const template = document.createElement('template');
+      template.innerHTML = xmlNewNode;
+      const newNode = template.content.firstChild;
+      node.parentNode.replaceChild(newNode, node);
+
+      // If the initial node has an id, replace the randowmly generated id by
+      // the initial id.
+      if (id) {
+        newNode.setAttribute('id', id);
+        view.id = id;
+      }
+
+      // Attach Messenger and the XML string of the initial node to 'view'
+      // and return it.
+      // The XML string of the initial node is saved because View provides a
+      // method View.restore to returns the node to its initial state.
+      view._mess = Messenger();
+      view._initialXMLNode = xmlNode0;
+      return view;
+    }
+
+    /**
      * Attaches the root component and its children to the DOM.
      *
      * @function (arg1)
@@ -3012,6 +3132,12 @@
     function _render(options) {
       const opt = _filter(options)
           ;
+
+      if (!options.children && !options.template) {
+        // If there is no children and no template, we componenterize the
+        // selected node!
+        return _componenterize(options);
+      }
 
       if (!opt.children) {
         // No components. Insert template only!
@@ -3043,6 +3169,26 @@
       return rootc;
     }
 
+    /**
+     * Restores the View Component to its initial state.
+     *
+     * @function (arg1)
+     * @private
+     * @param {String}        the view object,
+     * @returns {Boolean}     returns true if it succeeds,
+     * @since 0.0.0
+     */
+    function _restore(view) {
+      if (view._initialXMLNode) {
+        const template = document.createElement('template');
+        template.innerHTML = view._initialXMLNode;
+        const iNode = template.content.firstChild;
+        view.$()[0].parentNode.replaceChild(iNode, view.$()[0]);
+        return true;
+      }
+      return false;
+    }
+
 
     // -- Public Methods -------------------------------------------------------
 
@@ -3060,6 +3206,20 @@
       render(params) {
         return _render(params);
       },
+
+      /**
+       * Restores the View Component to its initial state.
+       *
+       * @method (arg1)
+       * @public
+       * @param {Object}        the view object,
+       * @returns {Boolean}     returns true if the restore succeeds,
+       * @since 0.0.0
+       */
+      restore(view) {
+        return _restore(view);
+      },
+
       // append() {
       //   // Appends a child component to the view.
       //   return this;

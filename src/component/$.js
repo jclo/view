@@ -41,6 +41,7 @@
  *  . text                        gets/sets the text contents of the element,
  *
  *  . clone                       clones the selected element,
+ *  . firstChild                  returns the firstChild element,
  *  . insertChildBefore           inserts a child element before another child element,
  *  . removeChild                 removes the passed-in child element,
  *  . replaceChild                replaces a child by another,
@@ -65,6 +66,7 @@
  *
  *  . on                          attachs an event listener to the current node,
  *  . off                         removes an event listener from the current node,
+ *  . trigger                     fires the event associated to the selected node,
  *
  *
  *
@@ -104,7 +106,9 @@
 
   function $(selector) {
     const cid = this.id;
-    let el;
+    let el
+      , el0
+      ;
 
     /**
      * Select a child element.
@@ -173,8 +177,8 @@
      * @since 0.0.0
      */
     const firstParent = function() {
-      if (this.root) {
-        this[0] = this.root;
+      if (this._root) {
+        this[0] = this._root;
       }
       return this;
     };
@@ -426,6 +430,19 @@
         return this[0].cloneNode(deep);
       }
       return this[0].cloneNode(true);
+    };
+
+    /**
+     * Returns the firstChild.
+     *
+     * @method ()
+     * @public
+     * @param {}            -,
+     * @returns {Object}    returns the firstChild,
+     * @since 0.0.0
+     */
+    const firstChild = function() {
+      return this[0].firstChild;
     };
 
     /**
@@ -748,6 +765,19 @@
       return this;
     };
 
+    /**
+     * Fires the event associated to the selected node.
+     *
+     * @method (arg1)
+     * @public
+     * @param {String}      the event name,
+     * @returns {Boolean}   returns false if preventDefault was activated
+     * @since 0.0.0         otherwise true,
+     */
+    const trigger = function(event) {
+      return this[0].dispatchEvent(new Event(event));
+    };
+
     // -- Main
     if (selector) {
       // Selects the first element that matches the selector(s):
@@ -755,11 +785,13 @@
     } else {
       // Selects the entire 'web component':
       el = document.querySelector(`#${cid}`);
+      el0 = el;
     }
 
     return {
       0: el,
       id: el ? el.id : null,
+      _root: el0,
       // getElement: getElement,
       select,
       selectChild,
@@ -779,6 +811,7 @@
       replaceWith,
       text,
       clone,
+      firstChild,
       insertChildBefore,
       removeChild,
       replaceChild,
@@ -798,6 +831,7 @@
       animate,
       on,
       off,
+      trigger,
     };
   }
 

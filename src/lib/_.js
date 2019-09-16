@@ -73,6 +73,7 @@
         /* eslint-disable-next-line no-param-reassign */
         object[keys[i]] = methods[keys[i]];
       }
+      return object;
     },
 
     /**
