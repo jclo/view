@@ -1,12 +1,12 @@
 ### HEAD
 
-### 0.0.2 (September 12, 2019)
+### 0.0.2 (September 16, 2019)
 
   * Added the method $().firstChild(),
   * Added a root parent to $(),
   * Added the method trigger to $(),
   * Added the method View.restore to remove all traces of a View Component from the DOM,
-  * ...,
+  * Release.
 
 
 ### 0.0.1 (September 10, 2019)
