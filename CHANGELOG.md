@@ -4,7 +4,7 @@
 
   * Replaced the embedded messenger module by @mobilabs/messenger,
   * Added the static methods View.append(), View.prepend() and View.remove(),
-  * ...,
+  * Release.
 
 
 ### 0.0.2 (September 16, 2019)
