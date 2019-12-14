@@ -1,4 +1,4 @@
-/* ***************************************************************************
+/** **************************************************************************
  *
  * Defines the View object and its public method.
  *
@@ -22,6 +22,9 @@
  *  . noConflict                  returns a reference to this View object,
  *  . render                      renders a View into the DOM,
  *  . restore                     restores the View Component to its initial state,
+ *  . append                      appends a child to a component,
+ *  . prepend                     appends a child to a comp. before the first child,
+ *  . remove                      removes a child from a component,
  *
  *
  *
@@ -122,17 +125,45 @@
       return R.restore(view);
     },
 
-    // append() {
-    //   // Appends a child component to the view.
-    //   R.append();
-    //   return this;
-    // },
-    //
-    // remove() {
-    //   // Removes a child component from the view
-    //   R.remove();
-    //   return this;
-    // },
+    /**
+     * Appends a child to a component.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Object}        the parameters,
+     * @returns {Boolean}     returns true if the append succeeds,
+     * @since 0.0.0
+     */
+    append(params) {
+      return R.append(params);
+    },
+
+    /**
+     * Appends a child to a component before the first child,
+     *
+     * @method (arg1)
+     * @public
+     * @param {Object}        the parameters,
+     * @returns {Boolean}     returns true if the append succeeds,
+     * @since 0.0.0
+     */
+    prepend(params) {
+      return R.prepend(params);
+    },
+
+    /**
+     * Removes a child from a component.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Object}        the parameters,
+     * @returns {Boolean}     returns true if the remove succeeds,
+     * @since 0.0.0
+     */
+    remove(params) {
+      return R.remove(params);
+    },
+
     //
     // destroy() {
     //   R.destroy();

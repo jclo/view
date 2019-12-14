@@ -1,4 +1,4 @@
-/* ***************************************************************************
+/** **************************************************************************
  *
  * Implements the View methods to render and attach a component to the DOM.
  *
@@ -13,11 +13,16 @@
  *  . _componenterize             transforms the selected node to a View Component,
  *  . _render                     attaches the root comp and its childs to the DOM,
  *  . _restore                    restores the View Component to its initial state,
+ *  . _appendToDOM                appends the child component to the DOM,
+ *  . _append                     appends a child to a component,
+ *  . _remove                     removes a child from a component,
  *
  *
  * Public Static Methods:
  *  . render                      attaches the root comp and its childs to the DOM,
  *  . restore                     restores the View Component to its initial state,
+ *  . append                      appends a child to a component,
+ *  . remove                      removes a child from a component,
  *
  *
  *
@@ -300,6 +305,186 @@
     return false;
   }
 
+  /**
+   * Appends the child component to the DOM.
+   *
+   * @function (arg1, arg2, arg3, arg4)
+   * @private
+   * @param {Object}        the parent,
+   * @param {String}        the child HTML tag,
+   * @param {String}        the parent node where to append the child,
+   * @param {String}        insert as the last or the first child,
+   * @returns {}            -,
+   * @since 0.0.0
+   */
+  /* eslint-disable no-console */
+  function _insertToDOM(parent, tag, el, position) {
+    const XMLString = parent.$getChild(tag)._renderer();
+
+    if (!el) {
+      if (position === 'first') {
+        parent.$().prepend(XMLString);
+      } else {
+        parent.$().appendHTML(XMLString);
+      }
+      return;
+    }
+
+    if (_.isString(el) && parent.$(el)[0]) {
+      if (position === 'first') {
+        parent.$(el).prepend(XMLString);
+      } else {
+        parent.$(el).appendHTML(XMLString);
+      }
+    } else {
+      console.log('warning: View.append: params.el is not valid! Component appended to the parent node.');
+      if (position === 'first') {
+        parent.$().prepend(XMLString);
+      } else {
+        parent.$().appendHTML(XMLString);
+      }
+    }
+  }
+  /* eslint-enable no-console */
+
+  /**
+   * Appends a child to a component.
+   *
+   * @function (arg1, arg2)
+   * @private
+   * @param {Object}        the parameters,
+   * @param {String}        insert as the last or the first child,
+   * @returns {Boolean}     returns true if the append succeeds,
+   * @since 0.0.0
+   */
+  /* eslint-disable no-console */
+  function _insert(params, position) {
+    const { root }     = params
+        , { children } = params
+        , { el }       = params
+        ;
+
+    let { parent } = params
+      , p
+      , c
+      , co
+      , fn
+      , opts
+      , tag
+      ;
+
+    // If the parent isn't defined, we attach the component to the first
+    // parent:
+    if (!parent) {
+      parent = root;
+    }
+
+    if (_.isString(parent)) {
+      if (_.isObject(root) && Object.prototype.hasOwnProperty.call(root, '_cList')) {
+        p = root.$getChild(parent);
+        if (!p) {
+          console.log(`warning: View.append: ${parent} does not exist!`);
+          return null;
+        }
+      } else {
+        console.log('warning: View.append: params.root is not valid!');
+        return null;
+      }
+    } else if (_.isObject(parent) && Object.prototype.hasOwnProperty.call(parent, '_cList')) {
+      p = parent;
+    } else {
+      console.log(`warning: View.append: ${parent} is improperly defined!`);
+      return null;
+    }
+
+    if (!_.isLiteralObject(children)) {
+      console.log('warning: View.append: params.children is not valid!');
+      return null;
+    }
+
+    const keys = Object.keys(children);
+    for (let i = 0; i < keys.length; i++) {
+      tag = keys[i];
+      c = children[keys[i]];
+
+      if (_.isLiteralObject(c)) {
+        fn = c.fn;
+        opts = c.options;
+      } else if (_.isFunction(c)) {
+        fn = c;
+        opts = undefined;
+      } else {
+        console.log('warning: View.append: params.children is not valid!');
+        return null;
+      }
+
+      View.Component._attachChild(p, fn, opts, tag);
+      _insertToDOM(p, tag, el, position);
+
+      co = p.$getChild(tag);
+      co._mess = p._mess;
+      _attachMessenger(co, p._mess);
+
+      co.events();
+      _fireEvents(co);
+    }
+    return true;
+  }
+  /* eslint-enable no-console */
+
+  /**
+   * Removes a child from a component.
+   *
+   * @method (arg1)
+   * @public
+   * @param {Object}        the parameters,
+   * @returns {Boolean}     returns true if the remove succeeds,
+   * @since 0.0.0
+   */
+  /* eslint-disable no-console */
+  function _remove(params) {
+    const { root }     = params
+        , { parent }   = params
+        , { children } = params
+        ;
+
+    let p
+      ;
+
+    if (_.isString(parent)) {
+      if (_.isObject(root) && Object.prototype.hasOwnProperty.call(root, '_cList')) {
+        p = root.$getChild(parent);
+        if (!p) {
+          console.log(`warning: View.append: ${parent} does not exist!`);
+          return null;
+        }
+      } else {
+        console.log('warning: View.append: params.root is not valid!');
+        return null;
+      }
+    } else if (_.isObject(parent) && Object.prototype.hasOwnProperty.call(parent, '_cList')) {
+      p = parent;
+    } else {
+      console.log(`warning: View.append: ${parent} is improperly defined!`);
+      return null;
+    }
+
+    if (!_.isString(children)) {
+      console.log('warning: View.append: params.children is not valid!');
+      return null;
+    }
+
+    // Remove from DOM:
+    const co = p.$getChild(children);
+    const el = p.$(`#${co.id}`)[0];
+    p.$(`#${co.id}`).parent().removeChild(el);
+
+    View.Component._removeChild(p, children);
+
+    return true;
+  }
+  /* eslint-enable no-console */
+
 
   // -- Public Methods -------------------------------------------------------
 
@@ -331,16 +516,45 @@
       return _restore(view);
     },
 
-    // append() {
-    //   // Appends a child component to the view.
-    //   return this;
-    // },
-    //
-    // remove() {
-    //   // Removes a child component from the view
-    //   return this;
-    // },
-    //
+    /**
+     * Appends a child to a component.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Object}        the parameters,
+     * @returns {Boolean}     returns true if the append succeeds,
+     * @since 0.0.0
+     */
+    append(params) {
+      return _insert(params);
+    },
+
+    /**
+     * Appends a child to a component as the first child.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Object}        the parameters,
+     * @returns {Boolean}     returns true if the append succeeds,
+     * @since 0.0.0
+     */
+    prepend(params) {
+      return _insert(params, 'first');
+    },
+
+    /**
+     * Removes a child from a component.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Object}        the parameters,
+     * @returns {Boolean}     returns true if the remove succeeds,
+     * @since 0.0.0
+     */
+    remove(params) {
+      return _remove(params);
+    },
+
     // destroy() {
     //   // Removes the View from the DOM
     //   return this;

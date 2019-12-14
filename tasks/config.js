@@ -10,6 +10,16 @@ module.exports = {
   parent: 'this',
   noparent: '-noparent',
   index: './index.js',
+
+  // These are the embedded external libraries.
+  import: {
+    parent: 'TV',
+    dest: './src/libin',
+    lib: [
+      './node_modules/@mobilabs/messenger/_dist/lib/messenger-noparent.js',
+    ],
+  },
+
   // These are the Javascript files required to build the library.
   /* eslint-disable no-multi-spaces */
   src: [
@@ -19,7 +29,7 @@ module.exports = {
     './src/_header',
     './src/tree.js',
     './src/lib/_.js',
-    './src/lib/messenger.js',
+    './src/libin/messenger.js',
 
     './src/view.js',
     './src/component/main.js',

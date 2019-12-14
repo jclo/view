@@ -1,4 +1,4 @@
-/* ***************************************************************************
+/** **************************************************************************
  *
  * Defines the function that extends a child component from Generic and
  * returns the child component constructor.
@@ -14,6 +14,11 @@
  *  . Component                   returns the child component constructor,
  *
  *
+ * Semi Private Static Methods:
+ *  . Component._attachChild      attaches a child to the passed-in component,
+ *  . Component._removeChild      removes a child from the passed-in component,
+ *
+ *
  *
  * @namespace    -
  * @dependencies none
@@ -22,7 +27,7 @@
  * @since        0.0.0
  * @version      -
  * ************************************************************************ */
-/* eslint-disable one-var, semi-style */
+/* eslint-disable one-var, semi-style, no-underscore-dangle */
 
 'use strict';
 
@@ -34,6 +39,7 @@
 
   // -- Local modules
   const { Generic } = TV.Component
+      , R           = TV.Component.Render
       ;
 
 
@@ -80,5 +86,35 @@
     return Child;
   };
   /* eslint-enable prefer-rest-params */
+
+  /**
+   * Attaches a child to the passed-in component.
+   *
+   * @function (arg1, arg2, arg3, arg4)
+   * @private
+   * @param {Object}        the parent component,
+   * @param {Function}      the child component,
+   * @param {Object}        the child options,
+   * @param {String}        the child HTML tag,
+   * @returns {}            -,
+   * @since 0.0.0
+   */
+  View.Component._attachChild = function(co, child, options, tag) {
+    R.attachChild(co, child, options, tag);
+  };
+
+  /**
+   * Removes a child from the passed-in component.
+   *
+   * @function (arg1, arg2)
+   * @private
+   * @param {Object}        the parent component,
+   * @param {String}        the child HTML tag,
+   * @returns {}            -,
+   * @since 0.0.0
+   */
+  View.Component._removeChild = function(co, child) {
+    R.removeChild(co, child);
+  };
 }());
-/* eslint-enable one-var, semi-style */
+/* eslint-enable one-var, semi-style, no-underscore-dangle */

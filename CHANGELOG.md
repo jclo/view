@@ -1,5 +1,12 @@
 ### HEAD
 
+### 0.0.3 (December 14, 2019)
+
+  * Replaced the embedded messenger module by @mobilabs/messenger,
+  * Added the static methods View.append(), View.prepend() and View.remove(),
+  * ...,
+
+
 ### 0.0.2 (September 16, 2019)
 
   * Added the method $().firstChild(),

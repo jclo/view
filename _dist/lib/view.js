@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * View v0.0.2
+ * View v0.0.3
  *
  * A companion View library for building web applications.
  * (you can download it from npm or github repositories)
@@ -10,6 +10,7 @@
 // Based on ES6.lib template v0.0.3
 // ESLint declarations
 /* global define */
+/* eslint no-shadow: ['error', { 'allow': ['root'] }] */
 /* eslint strict: ["error", "function"] */
 (function(root, factory) {
   'use strict';
@@ -284,298 +285,491 @@
   /* eslint-enable one-var, semi-style */
 
 
-  /* ***************************************************************************
+  /** ****************************************************************************
+   * Messenger v0.0.1
    *
-   * Defines the Messenger object.
-   *
-   * messenger.js is built upon the Prototypal Instantiation pattern. It
-   * returns an object by calling its constructor. It doesn't use the new
-   * keyword.
-   *
-   * Private Functions:
-   *  . _schema                     returns the event db schema,
-   *  . _add                        adds a new event into the db,
-   *  . _addEvents                  adds the events to the db,
-   *  . _publish                    fires an event,
-   *  . _unsubscribe                removes an event listener,
-   *  . _subscribeOnce              adds an event listener that is fired once,
-   *  . _subscribe                  adds an event listener,
-   *
-   *
-   * Constructor:
-   *  . Messenger                   creates and returns the Messenger object,
-   *
-   *
-   * Public Methods:
-   *  . subscribe                   adds an event listener,
-   *  . subscribeOnce               adds an event listener that is fired once,
-   *  . unsubscribe                 removes an event listener,
-   *  . publish                     fires an event,
-   *
-   *
-   *
-   * @namespace    TV.Messenger
-   * @dependencies none
-   * @exports      -
-   * @author       -
-   * @since        0.0.0
-   * @version      -
-   * ************************************************************************ */
-  /* eslint-disable one-var, semi-style, no-underscore-dangle */
-
-  (function() {
-    // IIFE
-
-    // -- Module path
-
-
-    // -- Local modules
-
-
-    // -- Local constants
-
-
-    // -- Local variables
-    let methods
+   * A tiny Javascript library to handle messages that carry a payload.
+   * (you can download it from npm or github repositories)
+   * Copyright (c) 2019 Mobilabs <contact@mobilabs.fr> (http://www.mobilabs.fr).
+   * Released under the MIT license. You may obtain a copy of the License
+   * at: http://www.opensource.org/licenses/mit-license.php).
+   * ************************************************************************** */
+  // Based on ES6.lib template v0.0.4
+  // ESLint declarations
+  /* global */
+  /* eslint strict: ["error", "function"] */
+  (function(root, factory) {
+    /* istanbul ignore next */
+    if (typeof define === 'function' && define.amd) {
+      // AMD. Register as an anonymous module.
+      define([''], factory);
+    } else if (typeof exports === 'object') {
+      // Node. Does not work with strict CommonJS, but
+      // only CommonJS-like environments that support module.exports,
+      // like Node.
+      module.exports = factory(root);
+      // This is a hack to attach the lib to the browser root when this lib is
+      // included inside another lib and the whole is browserifyied:
+      /* eslint-disable no-param-reassign */
+      if (root.Messenger === null) root.Messenger = factory(root);
+    } else {
+      // Browser globals.
+      /* eslint-disable-next-line no-param-reassign */
+      root.Messenger = factory(root);
+    }
+  }(TV, (root) => {
+    // This is the list of the constants that are defined at the global level of
+    // this module and are accessible to all. So, they are considered as reserved
+    // words for this library.
+    // const TM
+    /* eslint-disable one-var, semi-style */
+    let Messenger
+      , TM
       ;
+    /* eslint-enable one-var, semi-style */
 
-
-    // -- Private Functions ----------------------------------------------------
-
-    /**
-     * Returns the event db schema.
+    /* ***************************************************************************
      *
-     * @function ()
-     * @private
-     * @returns {Object}      returns the schema,
-     * @since 0.0.0
-     */
-    function _schema() {
-      return {
-        listeners: [],
-        listenersOnce: [],
+     * Defines the Messenger library.
+     *
+     * messenger.js is built upon the Prototypal Instantiation pattern. It
+     * returns an object by calling its constructor. It doesn't use the new
+     * keyword.
+     *
+     * Private Functions:
+     *  . none,
+     *
+     *
+     * Constructor:
+     *  . Messenger                   creates and returns the Messenger object,
+     *
+     *
+     * Public Static Methods:
+     *  . noConflict                  returns a reference to this Messenger object,
+     *
+     *
+     * Public Methods:
+     *  . subscribe                   adds an event listener,
+     *  . subscribeOnce               adds an event listener that is fired once,
+     *  . unsubscribe                 removes an event listener,
+     *  . publish                     fires an event,
+     *
+     *
+     *
+     * @namespace    Messenger
+     * @dependencies none
+     * @exports      -
+     * @author       -
+     * @since        0.0.0
+     * @version      -
+     * ************************************************************************ */
+    /* eslint-disable one-var, semi-style, no-underscore-dangle */
+
+    (function() {
+      // IIFE
+
+      // -- Module path
+
+
+      // -- Local modules
+
+
+      // -- Local constants
+      // Saves the previous value of the library variable, so that it can be
+      // restored later on, if noConflict is used.
+      const previousMessenger = root.Messenger
+          ;
+
+
+      // -- Local variables
+      let methods
+        ;
+
+
+      // -- Public ---------------------------------------------------------------
+
+      /**
+       * Returns the Messenger object.
+       * (Prototypal Instantiation Pattern)
+       *
+       * @constructor (arg1)
+       * @public
+       * @param {}              -,
+       * @returns {Object}      returns the Messenger object,
+       * @since 0.0.0
+       */
+      Messenger = function() {
+        const obj = Object.create(methods);
+        // Initializes the message database to empty:
+        obj._db = {};
+        return obj;
       };
-    }
 
-    /**
-     * Adds a new event into the db.
-     *
-     * @function (arg1, arg2)
-     * @private
-     * @param {Object}        the event db,
-     * @param {String}        the event,
-     * @returns {}            -,
-     * @since 0.0.0
-     */
-    function _add(db, e) {
-      if (!Object.prototype.hasOwnProperty.call(db, e)) {
+      // Attaches a constant to ESLib that provides the version of the lib.
+      Messenger.VERSION = '0.0.1';
+
+
+      // -- Public Static Methods ------------------------------------------------
+
+      /**
+       * Returns a reference to this Messenger object.
+       *
+       * Nota:
+       * Running Messenger in noConflic mode, returns the Messenger variable to its
+       _ previous owner.
+       *
+       * @method ()
+       * @public
+       * @param {}              -,
+       * @returns {String}      returns the Messenger object,
+       * @since 0.0.0
+       */
+      /* istanbul ignore next */
+      Messenger.noConflict = function() {
         /* eslint-disable-next-line no-param-reassign */
-        db[e] = _schema();
-      }
-    }
-
-    /**
-     * Adds the events to the db.
-     *
-     * @function (arg1, arg2)
-     * @private
-     * @param {Object}        the event db,
-     * @param {String/Array}  the event,
-     * @returns {}            -,
-     * @since 0.0.0
-     */
-    function _addEvents(db, e) {
-      if (typeof e === 'string') {
-        _add(db, e);
-      }
-    }
-
-    /**
-     * Fires an event.
-     *
-     * @function (arg1, arg2, arg3)
-     * @private
-     * @param {Object}        the event db,
-     * @param {String}        the event,
-     * @param {Object}        the payload,
-     * @returns {}            -,
-     * @since 0.0.0
-     */
-    function _publish(db, event, payload) {
-      if (typeof event === 'string' && Object.prototype.hasOwnProperty.call(db, event)) {
-        // Fires all the 'classic' listeners:
-        for (let i = 0; i < db[event].listeners.length; i++) {
-          db[event].listeners[i](payload);
-        }
-        // Fires all the listeners for once:
-        for (let i = 0; i < db[event].listenersOnce.length; i++) {
-          db[event].listenersOnce[i](payload);
-        }
-        // Remove all the event listeners for listener once:
-        db[event].listenersOnce.splice(0, db[event].listenersOnce.length);
-      }
-    }
-
-    /**
-     * Removes an event listener.
-     *
-     * @function (arg1, arg2, arg3)
-     * @private
-     * @param {Object}        the event db,
-     * @param {String}        the event,
-     * @param {Function}      the listener,
-     * @returns {}            -,
-     * @since 0.0.0
-     */
-    function _unsubscribe(db, event, listener) {
-      let index;
-
-      if (typeof event === 'string'
-          && typeof listener === 'function'
-          && Object.prototype.hasOwnProperty.call(db, event)) {
-        index = db[event].listeners.indexOf(listener);
-        if (index >= 0) {
-          db[event].listeners.splice(index, 1);
-        }
-        index = db[event].listenersOnce.indexOf(listener);
-        if (index >= 0) {
-          db[event].listenersOnce.splice(index, 1);
-        }
-      }
-    }
-
-    /**
-     * Adds an event listener that is fired once.
-     *
-     * @function (arg1, arg2, arg3, arg4)
-     * @private
-     * @param {Object}        the event db,
-     * @param {String}        the event,
-     * @param {Function}      the listener,
-     * @param {Boolean}       listens for any events if true, registered otherwise,
-     * @returns {}            -,
-     * @since 0.0.0
-     */
-    function _subscribeOnce(db, event, listener) {
-      _addEvents(db, event);
-      if (typeof event === 'string'
-          && typeof listener === 'function'
-          && Object.prototype.hasOwnProperty.call(db, event)) {
-        db[event].listenersOnce.push(listener);
-      }
-    }
-
-    /**
-     * Adds an event listener.
-     *
-     * @function (arg1, arg2, arg3, arg4)
-     * @private
-     * @param {Object}        the event db,
-     * @param {String}        the event,
-     * @param {Function}      the listener,
-     * @param {Boolean}       listens for any events if true, registered otherwise,
-     * @returns {}            -,
-     * @since 0.0.0
-     */
-    function _subscribe(db, event, listener) {
-      _addEvents(db, event);
-      if (typeof event === 'string'
-          && typeof listener === 'function'
-          && Object.prototype.hasOwnProperty.call(db, event)) {
-        db[event].listeners.push(listener);
-      }
-    }
-
-
-    // -- Public ---------------------------------------------------------------
-
-    /**
-     * Returns the View object.
-     * (Prototypal Instantiation Pattern)
-     *
-     * @constructor (arg1)
-     * @public
-     * @param {String}        the argument to be saved as an object variable,
-     * @returns {Object}      returns the View object,
-     * @since 0.0.0
-     */
-    TV.Messenger = function() {
-      const obj = Object.create(methods);
-      // Initializes the message database to empty:
-      obj._db = {};
-      return obj;
-    };
-
-
-    // -- Public Methods -------------------------------------------------------
-
-    methods = {
-
-      /**
-      * Adds an event listener.
-      *
-      * @method (arg1, arg2)
-      * @public
-      * @param {String}      the event,
-      * @param {Function}    the event handler,
-      * @returns {Object}    returns this,
-      * @since 0.0.0
-      */
-      subscribe(event, listener) {
-        _subscribe(this._db, event, listener);
+        root.Messenger = previousMessenger;
         return this;
-      },
+      };
+
+
+      // -- Public Methods -------------------------------------------------------
+
+      methods = {
+
+        /**
+        * Adds an event listener.
+        *
+        * @method (arg1, arg2)
+        * @public
+        * @param {String}      the event,
+        * @param {Function}    the event handler,
+        * @returns {Object}    returns this,
+        * @since 0.0.0
+        */
+        subscribe(event, listener) {
+          TM.subscribe(this._db, event, listener);
+          return this;
+        },
+
+        /**
+         * Adds an event listener that is fired once.
+         *
+         * @method (arg1, arg2)
+         * @public
+         * @param {String}      the event,
+         * @param {Function}    the event handler,
+         * @returns {Object}    returns this,
+         * @since 0.0.0
+         */
+        subscribeOnce(event, listener) {
+          TM.subscribeOnce(this._db, event, listener);
+          return this;
+        },
+
+        /**
+         * Removes an event listener.
+         *
+         * @method (arg1, arg2)
+         * @public
+         * @param {String}      the event,
+         * @param {Function}    the event handler,
+         * @returns {Object}    returns this,
+         * @since 0.0.0
+         */
+        unsubscribe(event, listener) {
+          TM.unsubscribe(this._db, event, listener);
+          return this;
+        },
+
+        /**
+         * Fires an event.
+         *
+         * @method (arg1, arg2)
+         * @public
+         * @param {String}      the event,
+         * @param {Object}      the payload,
+         * @returns {Object}    returns this,
+         * @since 0.0.0
+         */
+        publish(event, payload) {
+          TM.publish(this._db, event, payload);
+          return this;
+        },
+      };
+    }());
+    /* eslint-enable one-var, semi-style, no-underscore-dangle */
+
+
+    /* ***************************************************************************
+     *
+     * Implements the Messenger methods.
+     *
+     * messenger.js is just a literal object that contains a set of functions. It
+     * can't be intantiated.
+     *
+     * Private Functions:
+     *  . _schema                     returns the event db schema,
+     *  . _add                        adds a new event into the db,
+     *  . _addEvents                  adds the events to the db,
+     *  . _publish                    fires an event,
+     *  . _unsubscribe                removes an event listener,
+     *  . _subscribeOnce              adds an event listener that is fired once,
+     *  . _subscribe                  adds an event listener,
+     *
+     *
+     * Public Static Methods:
+     *  . subscribe                   adds an event listener,
+     *  . subscribeOnce               adds an event listener that is fired once,
+     *  . unsubscribe                 removes an event listener,
+     *  . publish                     fires an event,
+     *
+     *
+     *
+     * @namespace    Messenger.TM
+     * @dependencies none
+     * @exports      -
+     * @author       -
+     * @since        0.0.0
+     * @version      -
+     * ************************************************************************ */
+    /* eslint-disable one-var, semi-style, no-underscore-dangle */
+
+    (function() {
+      // IIFE
+
+      // -- Module path
+
+
+      // -- Local modules
+
+
+      // -- Local constants
+
+
+      // -- Local variables
+
+
+      // -- Private Functions ----------------------------------------------------
 
       /**
-       * Adds an event listener that is fired once.
+       * Returns the event db schema.
        *
-       * @method (arg1, arg2)
-       * @public
-       * @param {String}      the event,
-       * @param {Function}    the event handler,
-       * @returns {Object}    returns this,
+       * @function ()
+       * @private
+       * @returns {Object}      returns the schema,
        * @since 0.0.0
        */
-      subscribeOnce(event, listener) {
-        _subscribeOnce(this._db, event, listener);
-        return this;
-      },
+      function _schema() {
+        return {
+          listeners: [],
+          listenersOnce: [],
+        };
+      }
 
       /**
-       * Removes an event listener.
+       * Adds a new event into the db.
        *
-       * @method (arg1, arg2)
-       * @public
-       * @param {String}      the event,
-       * @param {Function}    the event handler,
-       * @returns {Object}    returns this,
+       * @function (arg1, arg2)
+       * @private
+       * @param {Object}        the event db,
+       * @param {String}        the event,
+       * @returns {}            -,
        * @since 0.0.0
        */
-      unsubscribe(event, listener) {
-        _unsubscribe(this._db, event, listener);
-        return this;
-      },
+      function _add(db, e) {
+        if (!Object.prototype.hasOwnProperty.call(db, e)) {
+          /* eslint-disable-next-line no-param-reassign */
+          db[e] = _schema();
+        }
+      }
+
+      /**
+       * Adds the events to the db.
+       *
+       * @function (arg1, arg2)
+       * @private
+       * @param {Object}        the event db,
+       * @param {String/Array}  the event,
+       * @returns {}            -,
+       * @since 0.0.0
+       */
+      function _addEvents(db, e) {
+        if (typeof e === 'string') {
+          _add(db, e);
+        }
+      }
 
       /**
        * Fires an event.
        *
-       * @method (arg1, arg2)
-       * @public
-       * @param {String}      the event,
-       * @param {Object}      the payload,
-       * @returns {Object}    returns this,
+       * @function (arg1, arg2, arg3)
+       * @private
+       * @param {Object}        the event db,
+       * @param {String}        the event,
+       * @param {Object}        the payload,
+       * @returns {}            -,
        * @since 0.0.0
        */
-      publish(event, payload) {
-        _publish(this._db, event, payload);
-        return this;
-      },
-    };
-  }());
-  /* eslint-enable one-var, semi-style, no-underscore-dangle */
+      function _publish(db, event, payload) {
+        if (typeof event === 'string' && Object.prototype.hasOwnProperty.call(db, event)) {
+          // Fires all the 'classic' listeners:
+          for (let i = 0; i < db[event].listeners.length; i++) {
+            db[event].listeners[i](payload);
+          }
+          // Fires all the listeners for once:
+          for (let i = 0; i < db[event].listenersOnce.length; i++) {
+            db[event].listenersOnce[i](payload);
+          }
+          // Remove all the event listeners for listener once:
+          db[event].listenersOnce.splice(0, db[event].listenersOnce.length);
+        }
+      }
+
+      /**
+       * Removes an event listener.
+       *
+       * @function (arg1, arg2, arg3)
+       * @private
+       * @param {Object}        the event db,
+       * @param {String}        the event,
+       * @param {Function}      the listener,
+       * @returns {}            -,
+       * @since 0.0.0
+       */
+      function _unsubscribe(db, event, listener) {
+        let index;
+
+        if (typeof event === 'string'
+            && typeof listener === 'function'
+            && Object.prototype.hasOwnProperty.call(db, event)) {
+          index = db[event].listeners.indexOf(listener);
+          if (index >= 0) {
+            db[event].listeners.splice(index, 1);
+          }
+          index = db[event].listenersOnce.indexOf(listener);
+          if (index >= 0) {
+            db[event].listenersOnce.splice(index, 1);
+          }
+        }
+      }
+
+      /**
+       * Adds an event listener that is fired once.
+       *
+       * @function (arg1, arg2, arg3, arg4)
+       * @private
+       * @param {Object}        the event db,
+       * @param {String}        the event,
+       * @param {Function}      the listener,
+       * @param {Boolean}       listens for any events if true, registered otherwise,
+       * @returns {}            -,
+       * @since 0.0.0
+       */
+      function _subscribeOnce(db, event, listener) {
+        _addEvents(db, event);
+        if (typeof event === 'string'
+            && typeof listener === 'function'
+            && Object.prototype.hasOwnProperty.call(db, event)) {
+          db[event].listenersOnce.push(listener);
+        }
+      }
+
+      /**
+       * Adds an event listener.
+       *
+       * @function (arg1, arg2, arg3, arg4)
+       * @private
+       * @param {Object}        the event db,
+       * @param {String}        the event,
+       * @param {Function}      the listener,
+       * @param {Boolean}       listens for any events if true, registered otherwise,
+       * @returns {}            -,
+       * @since 0.0.0
+       */
+      function _subscribe(db, event, listener) {
+        _addEvents(db, event);
+        if (typeof event === 'string'
+            && typeof listener === 'function'
+            && Object.prototype.hasOwnProperty.call(db, event)) {
+          db[event].listeners.push(listener);
+        }
+      }
 
 
-  /* ***************************************************************************
+      // -- Public Static Methods ------------------------------------------------
+
+      TM = {
+
+        /**
+         * Adds an event listener.
+         *
+         * @method (arg1, arg2, arg3)
+         * @public
+         * @param {Object}      the event db,
+         * @param {String}      the event,
+         * @param {Function}    the event handler,
+         * @returns {}          -,
+         * @since 0.0.0
+         */
+        subscribe(db, event, listener) {
+          _subscribe(db, event, listener);
+        },
+
+        /**
+         * Adds an event listener that is fired once.
+         *
+         * @method (arg1, arg2, arg3)
+         * @public
+         * @param {Object}      the event db,
+         * @param {String}      the event,
+         * @param {Function}    the event handler,
+         * @returns {}          -,
+         * @since 0.0.0
+         */
+        subscribeOnce(db, event, listener) {
+          _subscribeOnce(db, event, listener);
+        },
+
+        /**
+         * Removes an event listener.
+         *
+         * @method (arg1, arg2, arg3)
+         * @public
+         * @param {Object}      the event db,
+         * @param {String}      the event,
+         * @param {Function}    the event handler,
+         * @returns {}          -,
+         * @since 0.0.0
+         */
+        unsubscribe(db, event, listener) {
+          _unsubscribe(db, event, listener);
+        },
+
+        /**
+         * Fires an event.
+         *
+         * @method (arg1, arg2, arg3)
+         * @public
+         * @param {Object}      the event db,
+         * @param {String}      the event,
+         * @param {Object}      the payload,
+         * @returns {}          -,
+         * @since 0.0.0
+         */
+        publish(db, event, payload) {
+          _publish(db, event, payload);
+        },
+      };
+    }());
+    /* eslint-enable one-var, semi-style, no-underscore-dangle */
+
+
+    // Returns the library name:
+    return Messenger;
+  }));
+
+
+  /** **************************************************************************
    *
    * Defines the View object and its public method.
    *
@@ -599,6 +793,9 @@
    *  . noConflict                  returns a reference to this View object,
    *  . render                      renders a View into the DOM,
    *  . restore                     restores the View Component to its initial state,
+   *  . append                      appends a child to a component,
+   *  . prepend                     appends a child to a comp. before the first child,
+   *  . remove                      removes a child from a component,
    *
    *
    *
@@ -697,17 +894,45 @@
         return R.restore(view);
       },
 
-      // append() {
-      //   // Appends a child component to the view.
-      //   R.append();
-      //   return this;
-      // },
-      //
-      // remove() {
-      //   // Removes a child component from the view
-      //   R.remove();
-      //   return this;
-      // },
+      /**
+       * Appends a child to a component.
+       *
+       * @method (arg1)
+       * @public
+       * @param {Object}        the parameters,
+       * @returns {Boolean}     returns true if the append succeeds,
+       * @since 0.0.0
+       */
+      append(params) {
+        return R.append(params);
+      },
+
+      /**
+       * Appends a child to a component before the first child,
+       *
+       * @method (arg1)
+       * @public
+       * @param {Object}        the parameters,
+       * @returns {Boolean}     returns true if the append succeeds,
+       * @since 0.0.0
+       */
+      prepend(params) {
+        return R.prepend(params);
+      },
+
+      /**
+       * Removes a child from a component.
+       *
+       * @method (arg1)
+       * @public
+       * @param {Object}        the parameters,
+       * @returns {Boolean}     returns true if the remove succeeds,
+       * @since 0.0.0
+       */
+      remove(params) {
+        return R.remove(params);
+      },
+
       //
       // destroy() {
       //   R.destroy();
@@ -717,12 +942,12 @@
     };
 
     // Attaches a constant to View that provides the version of the lib.
-    View.VERSION = '0.0.2';
+    View.VERSION = '0.0.3';
   }());
   /* eslint-enable one-var, semi-style, no-underscore-dangle */
 
 
-  /* ***************************************************************************
+  /** **************************************************************************
    *
    * Defines the function that extends a child component from Generic and
    * returns the child component constructor.
@@ -738,6 +963,11 @@
    *  . Component                   returns the child component constructor,
    *
    *
+   * Semi Private Static Methods:
+   *  . Component._attachChild      attaches a child to the passed-in component,
+   *  . Component._removeChild      removes a child from the passed-in component,
+   *
+   *
    *
    * @namespace    -
    * @dependencies none
@@ -746,7 +976,7 @@
    * @since        0.0.0
    * @version      -
    * ************************************************************************ */
-  /* eslint-disable one-var, semi-style */
+  /* eslint-disable one-var, semi-style, no-underscore-dangle */
 
   (function() {
     // IIFE
@@ -756,6 +986,7 @@
 
     // -- Local modules
     const { Generic } = TV.Component
+        , R           = TV.Component.Render
         ;
 
 
@@ -802,11 +1033,41 @@
       return Child;
     };
     /* eslint-enable prefer-rest-params */
+
+    /**
+     * Attaches a child to the passed-in component.
+     *
+     * @function (arg1, arg2, arg3, arg4)
+     * @private
+     * @param {Object}        the parent component,
+     * @param {Function}      the child component,
+     * @param {Object}        the child options,
+     * @param {String}        the child HTML tag,
+     * @returns {}            -,
+     * @since 0.0.0
+     */
+    View.Component._attachChild = function(co, child, options, tag) {
+      R.attachChild(co, child, options, tag);
+    };
+
+    /**
+     * Removes a child from the passed-in component.
+     *
+     * @function (arg1, arg2)
+     * @private
+     * @param {Object}        the parent component,
+     * @param {String}        the child HTML tag,
+     * @returns {}            -,
+     * @since 0.0.0
+     */
+    View.Component._removeChild = function(co, child) {
+      R.removeChild(co, child);
+    };
   }());
-  /* eslint-enable one-var, semi-style */
+  /* eslint-enable one-var, semi-style, no-underscore-dangle */
 
 
-  /* ***************************************************************************
+  /** **************************************************************************
    *
    * Implements the methods to manipulate the DOM.
    *
@@ -1647,7 +1908,7 @@
   /* eslint-enable one-var, semi-style, no-underscore-dangle */
 
 
-  /* ***************************************************************************
+  /** **************************************************************************
    *
    * Defines the generic component. All the created components extend this
    * component.
@@ -2024,7 +2285,7 @@
   /* eslint-enable one-var, semi-style, no-underscore-dangle */
 
 
-  /* ***************************************************************************
+  /** **************************************************************************
    *
    * Performs a custom animation on a set of CSS properties.
    *
@@ -2354,7 +2615,7 @@
   /* eslint-enable one-var, semi-style, no-underscore-dangle */
 
 
-  /* ***************************************************************************
+  /** **************************************************************************
    *
    * Converts an hyperscript object to a node element.
    *
@@ -2573,7 +2834,7 @@
   /* eslint-enable one-var, semi-style, no-underscore-dangle */
 
 
-  /* ***************************************************************************
+  /** **************************************************************************
    *
    * Implements the _renderer method.
    *
@@ -2734,6 +2995,49 @@
     }
     /* eslint-enable no-param-reassign */
 
+    /**
+     * Attaches a child to the passed-in component.
+     *
+     * @function (arg1, arg2, arg3, arg4)
+     * @private
+     * @param {Object}        the parent component,
+     * @param {Function}      the child component,
+     * @param {Object}        the child options,
+     * @param {String}        the child HTML tag,
+     * @returns {}            -,
+     * @since 0.0.0
+     */
+    /* eslint-disable no-param-reassign */
+    function _attachChild(co, child, options, tag) {
+      const c = child(options);
+      c._tag = tag;
+
+      if (!co._cList) co._cList = {};
+      if (!co.children) co.children = {};
+      co._cList[c._tag.replace(/[^a-zA-z0-9]/g, '')] = c;
+      co.children[tag] = { fn: child, options };
+    }
+    /* eslint-enable no-param-reassign */
+
+    /**
+     * Removes a child from the passed-in component.
+     *
+     * @function (arg1, arg2)
+     * @private
+     * @param {Object}        the parent component,
+     * @param {String}        the child HTML tag,
+     * @returns {}            -,
+     * @since 0.0.0
+     */
+    /* eslint-disable no-param-reassign */
+    function _removeChild(co, child) {
+      if (_.isString(child) && _.isLiteralObject(co._cList)) {
+        delete co._cList[child.replace(/[^a-zA-z0-9]/g, '')];
+        delete co.children[child];
+      }
+    }
+    /* eslint-enable no-param-reassign */
+
 
     // -- Public Methods -------------------------------------------------------
 
@@ -2751,12 +3055,42 @@
       render(co) {
         return _render(co);
       },
+
+      /**
+       * Attaches a child to the passed-in component.
+       *
+       * @method (arg1, arg2, arg3, arg4)
+       * @public
+       * @param {Object}        the parent component,
+       * @param {Function}      the child component,
+       * @param {Object}        the child options,
+       * @param {String}        the child HTML tag,
+       * @returns {}            -,
+       * @since 0.0.0
+       */
+      attachChild(co, child, options, tag) {
+        _attachChild(co, child, options, tag);
+      },
+
+      /**
+       * Removes a child from the passed-in component.
+       *
+       * @method (arg1, arg2)
+       * @public
+       * @param {Object}        the parent component,
+       * @param {String}        the child HTML tag,
+       * @returns {}            -,
+       * @since 0.0.0
+       */
+      removeChild(co, child) {
+        _removeChild(co, child);
+      },
     });
   }());
   /* eslint-enable one-var, semi-style, no-underscore-dangle */
 
 
-  /* ***************************************************************************
+  /** **************************************************************************
    *
    * A set of utility functions for View.Component.
    *
@@ -2889,7 +3223,7 @@
   /* eslint-enable one-var, semi-style, no-underscore-dangle */
 
 
-  /* ***************************************************************************
+  /** **************************************************************************
    *
    * Implements the View methods to render and attach a component to the DOM.
    *
@@ -2904,11 +3238,16 @@
    *  . _componenterize             transforms the selected node to a View Component,
    *  . _render                     attaches the root comp and its childs to the DOM,
    *  . _restore                    restores the View Component to its initial state,
+   *  . _appendToDOM                appends the child component to the DOM,
+   *  . _append                     appends a child to a component,
+   *  . _remove                     removes a child from a component,
    *
    *
    * Public Static Methods:
    *  . render                      attaches the root comp and its childs to the DOM,
    *  . restore                     restores the View Component to its initial state,
+   *  . append                      appends a child to a component,
+   *  . remove                      removes a child from a component,
    *
    *
    *
@@ -3189,6 +3528,186 @@
       return false;
     }
 
+    /**
+     * Appends the child component to the DOM.
+     *
+     * @function (arg1, arg2, arg3, arg4)
+     * @private
+     * @param {Object}        the parent,
+     * @param {String}        the child HTML tag,
+     * @param {String}        the parent node where to append the child,
+     * @param {String}        insert as the last or the first child,
+     * @returns {}            -,
+     * @since 0.0.0
+     */
+    /* eslint-disable no-console */
+    function _insertToDOM(parent, tag, el, position) {
+      const XMLString = parent.$getChild(tag)._renderer();
+
+      if (!el) {
+        if (position === 'first') {
+          parent.$().prepend(XMLString);
+        } else {
+          parent.$().appendHTML(XMLString);
+        }
+        return;
+      }
+
+      if (_.isString(el) && parent.$(el)[0]) {
+        if (position === 'first') {
+          parent.$(el).prepend(XMLString);
+        } else {
+          parent.$(el).appendHTML(XMLString);
+        }
+      } else {
+        console.log('warning: View.append: params.el is not valid! Component appended to the parent node.');
+        if (position === 'first') {
+          parent.$().prepend(XMLString);
+        } else {
+          parent.$().appendHTML(XMLString);
+        }
+      }
+    }
+    /* eslint-enable no-console */
+
+    /**
+     * Appends a child to a component.
+     *
+     * @function (arg1, arg2)
+     * @private
+     * @param {Object}        the parameters,
+     * @param {String}        insert as the last or the first child,
+     * @returns {Boolean}     returns true if the append succeeds,
+     * @since 0.0.0
+     */
+    /* eslint-disable no-console */
+    function _insert(params, position) {
+      const { root }     = params
+          , { children } = params
+          , { el }       = params
+          ;
+
+      let { parent } = params
+        , p
+        , c
+        , co
+        , fn
+        , opts
+        , tag
+        ;
+
+      // If the parent isn't defined, we attach the component to the first
+      // parent:
+      if (!parent) {
+        parent = root;
+      }
+
+      if (_.isString(parent)) {
+        if (_.isObject(root) && Object.prototype.hasOwnProperty.call(root, '_cList')) {
+          p = root.$getChild(parent);
+          if (!p) {
+            console.log(`warning: View.append: ${parent} does not exist!`);
+            return null;
+          }
+        } else {
+          console.log('warning: View.append: params.root is not valid!');
+          return null;
+        }
+      } else if (_.isObject(parent) && Object.prototype.hasOwnProperty.call(parent, '_cList')) {
+        p = parent;
+      } else {
+        console.log(`warning: View.append: ${parent} is improperly defined!`);
+        return null;
+      }
+
+      if (!_.isLiteralObject(children)) {
+        console.log('warning: View.append: params.children is not valid!');
+        return null;
+      }
+
+      const keys = Object.keys(children);
+      for (let i = 0; i < keys.length; i++) {
+        tag = keys[i];
+        c = children[keys[i]];
+
+        if (_.isLiteralObject(c)) {
+          fn = c.fn;
+          opts = c.options;
+        } else if (_.isFunction(c)) {
+          fn = c;
+          opts = undefined;
+        } else {
+          console.log('warning: View.append: params.children is not valid!');
+          return null;
+        }
+
+        View.Component._attachChild(p, fn, opts, tag);
+        _insertToDOM(p, tag, el, position);
+
+        co = p.$getChild(tag);
+        co._mess = p._mess;
+        _attachMessenger(co, p._mess);
+
+        co.events();
+        _fireEvents(co);
+      }
+      return true;
+    }
+    /* eslint-enable no-console */
+
+    /**
+     * Removes a child from a component.
+     *
+     * @method (arg1)
+     * @public
+     * @param {Object}        the parameters,
+     * @returns {Boolean}     returns true if the remove succeeds,
+     * @since 0.0.0
+     */
+    /* eslint-disable no-console */
+    function _remove(params) {
+      const { root }     = params
+          , { parent }   = params
+          , { children } = params
+          ;
+
+      let p
+        ;
+
+      if (_.isString(parent)) {
+        if (_.isObject(root) && Object.prototype.hasOwnProperty.call(root, '_cList')) {
+          p = root.$getChild(parent);
+          if (!p) {
+            console.log(`warning: View.append: ${parent} does not exist!`);
+            return null;
+          }
+        } else {
+          console.log('warning: View.append: params.root is not valid!');
+          return null;
+        }
+      } else if (_.isObject(parent) && Object.prototype.hasOwnProperty.call(parent, '_cList')) {
+        p = parent;
+      } else {
+        console.log(`warning: View.append: ${parent} is improperly defined!`);
+        return null;
+      }
+
+      if (!_.isString(children)) {
+        console.log('warning: View.append: params.children is not valid!');
+        return null;
+      }
+
+      // Remove from DOM:
+      const co = p.$getChild(children);
+      const el = p.$(`#${co.id}`)[0];
+      p.$(`#${co.id}`).parent().removeChild(el);
+
+      View.Component._removeChild(p, children);
+
+      return true;
+    }
+    /* eslint-enable no-console */
+
 
     // -- Public Methods -------------------------------------------------------
 
@@ -3220,16 +3739,45 @@
         return _restore(view);
       },
 
-      // append() {
-      //   // Appends a child component to the view.
-      //   return this;
-      // },
-      //
-      // remove() {
-      //   // Removes a child component from the view
-      //   return this;
-      // },
-      //
+      /**
+       * Appends a child to a component.
+       *
+       * @method (arg1)
+       * @public
+       * @param {Object}        the parameters,
+       * @returns {Boolean}     returns true if the append succeeds,
+       * @since 0.0.0
+       */
+      append(params) {
+        return _insert(params);
+      },
+
+      /**
+       * Appends a child to a component as the first child.
+       *
+       * @method (arg1)
+       * @public
+       * @param {Object}        the parameters,
+       * @returns {Boolean}     returns true if the append succeeds,
+       * @since 0.0.0
+       */
+      prepend(params) {
+        return _insert(params, 'first');
+      },
+
+      /**
+       * Removes a child from a component.
+       *
+       * @method (arg1)
+       * @public
+       * @param {Object}        the parameters,
+       * @returns {Boolean}     returns true if the remove succeeds,
+       * @since 0.0.0
+       */
+      remove(params) {
+        return _remove(params);
+      },
+
       // destroy() {
       //   // Removes the View from the DOM
       //   return this;

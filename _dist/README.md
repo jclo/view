@@ -641,6 +641,9 @@ Static Methods                  | Description
 Component(options)              | returns the child component constructor,
 render({...})                   | renders the components in the DOM and returns the root component object,
 restore(view),                  | restores the DOM to its initial state,
+append({...})                   | adds a component to a defined component as the last child,
+prepend({...})                  | adds a component to a defined component as the first child,
+remove({...})                   | removes a component from a defined component,
 ```
 
 
@@ -688,7 +691,7 @@ $().appendBefore('tag')         | inserts the element before the selected elemen
 $().appendAfter('tag')          | inserts the element after the selected element and returns this,
 $().replace('tag')              | replaces the selected element by the passed-in element and returns this,
 
-$().append(xml)                 | inserts the element (defined by the passed-in XML string) after the last child node and returns this,
+$().appendHTML(xml)             | inserts the element (defined by the passed-in XML string) after the last child node and returns this,
 $().prepend(xml)                | inserts the element before the first child node and returns this,
 $(el).after(xml)¹               | inserts the element after the selected element and returns this,
 $(el).before(xml)¹              | inserts the element before the selected element and returns this,

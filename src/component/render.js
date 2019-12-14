@@ -1,4 +1,4 @@
-/* ***************************************************************************
+/** **************************************************************************
  *
  * Implements the _renderer method.
  *
@@ -161,6 +161,49 @@
   }
   /* eslint-enable no-param-reassign */
 
+  /**
+   * Attaches a child to the passed-in component.
+   *
+   * @function (arg1, arg2, arg3, arg4)
+   * @private
+   * @param {Object}        the parent component,
+   * @param {Function}      the child component,
+   * @param {Object}        the child options,
+   * @param {String}        the child HTML tag,
+   * @returns {}            -,
+   * @since 0.0.0
+   */
+  /* eslint-disable no-param-reassign */
+  function _attachChild(co, child, options, tag) {
+    const c = child(options);
+    c._tag = tag;
+
+    if (!co._cList) co._cList = {};
+    if (!co.children) co.children = {};
+    co._cList[c._tag.replace(/[^a-zA-z0-9]/g, '')] = c;
+    co.children[tag] = { fn: child, options };
+  }
+  /* eslint-enable no-param-reassign */
+
+  /**
+   * Removes a child from the passed-in component.
+   *
+   * @function (arg1, arg2)
+   * @private
+   * @param {Object}        the parent component,
+   * @param {String}        the child HTML tag,
+   * @returns {}            -,
+   * @since 0.0.0
+   */
+  /* eslint-disable no-param-reassign */
+  function _removeChild(co, child) {
+    if (_.isString(child) && _.isLiteralObject(co._cList)) {
+      delete co._cList[child.replace(/[^a-zA-z0-9]/g, '')];
+      delete co.children[child];
+    }
+  }
+  /* eslint-enable no-param-reassign */
+
 
   // -- Public Methods -------------------------------------------------------
 
@@ -177,6 +220,36 @@
      */
     render(co) {
       return _render(co);
+    },
+
+    /**
+     * Attaches a child to the passed-in component.
+     *
+     * @method (arg1, arg2, arg3, arg4)
+     * @public
+     * @param {Object}        the parent component,
+     * @param {Function}      the child component,
+     * @param {Object}        the child options,
+     * @param {String}        the child HTML tag,
+     * @returns {}            -,
+     * @since 0.0.0
+     */
+    attachChild(co, child, options, tag) {
+      _attachChild(co, child, options, tag);
+    },
+
+    /**
+     * Removes a child from the passed-in component.
+     *
+     * @method (arg1, arg2)
+     * @public
+     * @param {Object}        the parent component,
+     * @param {String}        the child HTML tag,
+     * @returns {}            -,
+     * @since 0.0.0
+     */
+    removeChild(co, child) {
+      _removeChild(co, child);
     },
   });
 }());

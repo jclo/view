@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A simple Append</title>
+    <link rel="stylesheet" href="">
+    <style>
+    </style>
+    <script src="../lib/view.js"></script>
+    <script>
+      window.onload = function() {
+
+        const A = View.Component({
+          render() {
+            return `
+            <div>
+              <p>Component A</p>
+            </div>`;
+          }
+        });
+
+        const B = View.Component({
+          render() {
+            return `
+            <div>
+              <div class='b'>
+                <p>Component B</p>
+                <div class='bb'></div>
+              </div>
+            </div>`;
+          }
+        });
+
+        const C = View.Component({
+          render() {
+            this.name = 'appended C!';
+            return `
+            <div>
+              <p>Component C ${this.props.options.zzz}</p>
+            </div>`;
+          }
+        });
+
+        const D = View.Component({
+          render() {
+            this.name = 'appended D!';
+            this.children = { '<Ccc />': { fn: C, options: { zzz: 'zzzc' } }};
+            return `
+            <div>
+              <h3>${this.props.options.title}</h3>
+              <p>Component D</p>
+              <Ccc />
+            </div>`;
+          }
+        });
+
+        const view = View.render({
+          el: '#app',
+          children: {
+            '<Aaa />': { fn: A, options: {} },
+            '<Bbb />': {  fn: B, options: {} },
+          },
+          template: `
+            <div><Aaa /><Bbb /></div>
+          `,
+        });
+
+        View.append({
+          root: view,
+          parent: '<Bbb />',
+          el: '.b',
+          children: {
+            '<Ddd />': { fn: D, options: { title: 'coucou' } },
+          },
+        });
+
+        setTimeout(() => {
+          View.remove({
+            root: view,
+            parent: '<Bbb />',
+            parent: view.$getChild('<Bbb />'),
+            children: '<Ddd />',
+          });
+        }, 5000);
+
+        setTimeout(() => {
+          View.prepend({
+            root: view,
+            parent: '<Bbb />',
+            el: '.b',
+            children: {
+              '<Ddd2 />': { fn: D, options: { title: 'coucou' } },
+            },
+          });
+        }, 8000);
+      };
+    </script>
+  </head>
+
+  <body>
+    <div id='app'></div>
+  </body>
+</html>

@@ -64,6 +64,8 @@ function copydev() {
 function makenoparentlib() {
   return src(`${libdir}/${name}${noparent}.js`)
     .pipe(header(license))
+    .pipe(replace('/*! *', '/** *'))
+    .pipe(replace('/* global define */', '/* global */'))
     .pipe(replace('{{lib:name}}', `${libname}`))
     .pipe(replace('{{lib:version}}', pack.version))
     .pipe(replace('{{lib:description}}', pack.description))
