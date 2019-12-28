@@ -3,7 +3,7 @@
 ### 0.0.4 (December 28, 2019)
 
   * Replaced the template ES6lib by ES6libplus,
-  * ...,
+  * Release.
 
 
 ### 0.0.3 (December 14, 2019)
