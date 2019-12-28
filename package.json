@@ -1,6 +1,6 @@
 {
   "name": "@mobilabs/view",
-  "version": "0.0.3",
+  "version": "0.0.4-alpha.0",
   "description": "A companion View library for building web applications",
   "main": "index.js",
   "bin": {},
@@ -13,7 +13,8 @@
     "check-coverage": "nyc check-coverage --statements 10 --branches 5 --functions 10 --lines 10",
     "display-coverage": "opener ./coverage/lcov-report/index.html",
     "report-coverage": "nyc report --reporter=text-lcov | coveralls",
-    "report": "nyc report"
+    "report": "nyc report",
+    "doc": ""
   },
   "repository": {
     "type": "git",
@@ -39,25 +40,25 @@
     "@mobilabs/messenger": "0.0.1"
   },
   "devDependencies": {
-    "chai": "4.2.0",
-    "coveralls": "3.0.9",
-    "cross-env": "6.0.3",
-    "del": "5.1.0",
-    "eslint": "6.7.2",
-    "eslint-config-airbnb-base": "14.0.0",
-    "eslint-plugin-import": "2.19.1",
-    "gulp": "4.0.2",
-    "gulp-concat": "2.6.1",
-    "gulp-footer": "2.0.2",
-    "gulp-header": "2.0.9",
-    "gulp-rename": "2.0.0",
-    "gulp-replace": "1.0.0",
-    "gulp-uglify-es": "2.0.0",
-    "husky": "3.1.0",
-    "jsdom": "15.2.1",
-    "mocha": "6.2.2",
-    "nyc": "14.1.1",
-    "opener": "1.5.1"
+    "chai": "^4.2.0",
+    "coveralls": "^3.0.9",
+    "cross-env": "^6.0.3",
+    "del": "^5.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-header": "^2.0.9",
+    "gulp-modulify": "0.0.3",
+    "gulp-rename": "^2.0.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-uglify-es": "^2.0.0",
+    "husky": "^3.1.0",
+    "jsdom": "^15.2.1",
+    "mocha": "^6.2.2",
+    "nyc": "^15.0.0",
+    "opener": "^1.5.1"
   },
   "publishConfig": {
     "access": "public"

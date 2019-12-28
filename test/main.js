@@ -2,7 +2,6 @@
 /* global describe, it */
 /* eslint one-var: 0, no-unused-vars: 0, semi-style: 0 */
 
-'use strict';
 
 // -- Node modules
 const { JSDOM }  = require('jsdom')

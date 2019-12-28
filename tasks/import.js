@@ -1,7 +1,6 @@
 /* eslint one-var: 0, import/no-extraneous-dependencies: 0, semi-style: 0
   no-param-reassign: 0 */
 
-'use strict';
 
 // -- Node modules
 const { src, dest, series } = require('gulp')
@@ -37,7 +36,6 @@ function importlibs() {
   return src(iport.lib)
     .pipe(replace('/*! *', '/** *'))
     .pipe(replace('/* global define */', '/* global */'))
-    .pipe(replace('{{lib:parent}}', iport.parent))
     .pipe(rename((path) => {
       path.basename = path.basename.replace(re, '');
     }))

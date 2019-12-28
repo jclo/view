@@ -35,144 +35,144 @@
  * @since        0.0.0
  * @version      -
  * ************************************************************************ */
+/* global root, $__TREE */
 /* eslint-disable one-var, semi-style, no-underscore-dangle */
 
-'use strict';
-
-(function() {
-  // IIFE
-
-  // -- Module path
+// IIFE_START
 
 
-  // -- Local modules
-  const R = TV.Renderer.Public
-      ;
+// -- Local modules
+import R from './renderer/main';
 
 
-  // -- Local constants
-  // Saves the previous value of the library variable, so that it can be
-  // restored later on, if noConflict is used.
-  const previousView = root.View;
+// -- Local constants
+// Saves the previous value of the library variable, so that it can be
+// restored later on, if noConflict is used.
+const previousView = root.View;
 
 
-  // -- Local variables
+// -- Local variables
 
 
-  // -- Private & Public Static Methods --------------------------------------
+// -- Private & Public Static Methods --------------------------------------
 
-  View = {
+View = {
 
-    /**
-     * Returns the internal objects for testing purpose.
-     *
-     * @method ()
-     * @private
-     * @param {}            -,
-     * @returns {Object}    returns TV tree,
-     * @since 0.0.0
-     */
-    _setTestMode() {
-      TV._ = _;
-      return TV;
-    },
+  /**
+   * Returns the internal objects for testing purpose.
+   *
+   * @method ()
+   * @private
+   * @param {}              -,
+   * @returns {Object}      returns TV tree,
+   * @since 0.0.0
+   */
+  _setTestMode() {
+    return $__TREE;
+  },
 
-    /**
-     * Returns a reference to this View object.
-     *
-     * Nota:
-     * Running View in noConflic mode, returns the View variable to its
-     * previous owner.
-     *
-     * @method ()
-     * @public
-     * @param {}            -,
-     * @returns {Object}    returns the View object,
-     * @since 0.0.0
-     */
-    noConflict() {
-      /* eslint-disable-next-line no-param-reassign */
-      root.View = previousView;
-      return this;
-    },
+  /**
+   * Returns a reference to this View object.
+   *
+   * Nota:
+   * Running View in noConflic mode, returns the View variable to its
+   * _ previous owner.
+   *
+   * @method ()
+   * @public
+   * @param {}              -,
+   * @returns {String}      returns the View object,
+   * @since 0.0.0
+   */
+  /* istanbul ignore next */
+  noConflict() {
+    /* eslint-disable-next-line no-param-reassign */
+    root.View = previousView;
+    return this;
+  },
 
-    /**
-     * Renders a View into the DOM.
-     *
-     * @method ([el, components, template])
-     * @public
-     * @param {}            -,
-     * @returns {Object}    returns the root component object,
-     * @since 0.0.0
-     */
-    render(options) {
-      // options.el: '# . node', // could be an id, a class or a node element
-      // options.components: { 'tag': { component: ref, options: {} } }
-      // options.template: 'XMLString',
-      return R.render(options);
-    },
+  /**
+   * Renders a View into the DOM.
+   *
+   * @method ([el, components, template])
+   * @public
+   * @param {}              -,
+   * @returns {Object}      returns the root component object,
+   * @since 0.0.0
+   */
+  render(options) {
+    // options.el: '# . node', // could be an id, a class or a node element
+    // options.components: { 'tag': { component: ref, options: {} } }
+    // options.template: 'XMLString',
+    return R.render(options);
+  },
 
-    /**
-     * Restores the View Component to its initial state.
-     *
-     * @method (arg1)
-     * @public
-     * @param {Object}        the view object,
-     * @returns {Boolean}     returns true if the restore succeeds,
-     * @since 0.0.0
-     */
-    restore(view) {
-      return R.restore(view);
-    },
+  /**
+   * Restores the View Component to its initial state.
+   *
+   * @method (arg1)
+   * @public
+   * @param {Object}        the view object,
+   * @returns {Boolean}     returns true if the restore succeeds,
+   * @since 0.0.0
+   */
+  restore(view) {
+    return R.restore(view);
+  },
 
-    /**
-     * Appends a child to a component.
-     *
-     * @method (arg1)
-     * @public
-     * @param {Object}        the parameters,
-     * @returns {Boolean}     returns true if the append succeeds,
-     * @since 0.0.0
-     */
-    append(params) {
-      return R.append(params);
-    },
+  /**
+   * Appends a child to a component.
+   *
+   * @method (arg1)
+   * @public
+   * @param {Object}        the parameters,
+   * @returns {Boolean}     returns true if the append succeeds,
+   * @since 0.0.0
+   */
+  append(params) {
+    return R.append(params);
+  },
 
-    /**
-     * Appends a child to a component before the first child,
-     *
-     * @method (arg1)
-     * @public
-     * @param {Object}        the parameters,
-     * @returns {Boolean}     returns true if the append succeeds,
-     * @since 0.0.0
-     */
-    prepend(params) {
-      return R.prepend(params);
-    },
+  /**
+   * Appends a child to a component before the first child,
+   *
+   * @method (arg1)
+   * @public
+   * @param {Object}        the parameters,
+   * @returns {Boolean}     returns true if the append succeeds,
+   * @since 0.0.0
+   */
+  prepend(params) {
+    return R.prepend(params);
+  },
 
-    /**
-     * Removes a child from a component.
-     *
-     * @method (arg1)
-     * @public
-     * @param {Object}        the parameters,
-     * @returns {Boolean}     returns true if the remove succeeds,
-     * @since 0.0.0
-     */
-    remove(params) {
-      return R.remove(params);
-    },
+  /**
+   * Removes a child from a component.
+   *
+   * @method (arg1)
+   * @public
+   * @param {Object}        the parameters,
+   * @returns {Boolean}     returns true if the remove succeeds,
+   * @since 0.0.0
+   */
+  remove(params) {
+    return R.remove(params);
+  },
 
-    //
-    // destroy() {
-    //   R.destroy();
-    //   // Removes the View from the DOM
-    //   return this;
-    // },
-  };
+  //
+  // destroy() {
+  //   R.destroy();
+  //   // Removes the View from the DOM
+  //   return this;
+  // },
+};
 
-  // Attaches a constant to View that provides the version of the lib.
-  View.VERSION = '{{lib:version}}';
-}());
-/* eslint-enable one-var, semi-style, no-underscore-dangle */
+// Attaches a constant to View that provides the version of the lib.
+View.VERSION = '{{lib:version}}';
+
+
+// -- Export
+// none (View is attached to the global window)
+
+// IIFE_END
+/* eslint-disable one-var, semi-style, no-underscore-dangle */

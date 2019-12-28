@@ -1,4 +1,4 @@
-// Based on ES6.lib template v0.0.3
+// Based on ES6Libplus template v0.0.3
 // ESLint declarations
 /* global define */
 /* eslint no-shadow: ['error', { 'allow': ['root'] }] */
@@ -30,9 +30,7 @@
   // This is the list of the constants that are defined at the global level of
   // this module and are accessible to all. So, they are considered as reserved
   // words for this library.
-  // const TV
   /* eslint-disable one-var, semi-style */
   let View
-    , _
     ;
   /* eslint-enable one-var, semi-style */

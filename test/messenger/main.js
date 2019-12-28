@@ -2,8 +2,6 @@
 /* global describe */
 /* eslint one-var: 0, semi-style: 0, no-underscore-dangle: 0 */
 
-'use strict';
-
 // -- Node modules
 
 
@@ -26,7 +24,7 @@ const constructor   = require('./constructor.js')
 // -- Main
 module.exports = function(View) {
   describe('Test Messenger library:', () => {
-    const { Messenger } = View._setTestMode();
+    const { Messenger } = View._setTestMode().src.libin;
     constructor(Messenger);
     methods(Messenger);
     subscribe(Messenger);

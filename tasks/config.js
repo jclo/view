@@ -1,7 +1,4 @@
-// ESLint declarations:
 /* eslint */
-
-'use strict';
 
 module.exports = {
   dist: './_dist',
@@ -13,7 +10,7 @@ module.exports = {
 
   // These are the embedded external libraries.
   import: {
-    parent: 'TV',
+    parent: '$__TREE.libin',
     dest: './src/libin',
     lib: [
       './node_modules/@mobilabs/messenger/_dist/lib/messenger-noparent.js',
@@ -22,29 +19,32 @@ module.exports = {
 
   // These are the Javascript files required to build the library.
   /* eslint-disable no-multi-spaces */
-  src: [
-    // These three files (_header, tree.js and extend.js) must be declared in
-    // this order as they create the umd module, define the object tree and
-    // the function to fill the tree!
-    './src/_header',
-    './src/tree.js',
-    './src/lib/_.js',
-    './src/libin/messenger.js',
+  src: {
+    // This is the header section of the UMD module:
+    header: './src/_header',
 
-    './src/view.js',
-    './src/component/main.js',
-    './src/component/$.js',           // this file must be listed before generic.js
-    './src/component/generic.js',     // as generic.js refer to $,
-    './src/component/animate.js',
-    './src/component/hyperscript.js',
-    './src/component/render.js',
-    './src/component/util.js',
+    // This is the code of the library that is surrounded by the UMD module
+    // header and footer.
+    core: [
+      './src/view.js',
+      './src/libin/messenger.js',
+      './src/lib/_.js',
 
-    './src/renderer/main.js',
+      './src/component/main.js',
+      './src/component/$.js',
+      './src/component/animate.js',
+      './src/component/generic.js',
+      './src/component/hyperscript.js',
+      './src/component/render.js',
+      './src/component/util.js',
 
-    // This file must always be the last one as it closes the umd module.
-    './src/_footer',
-  ],
+      './src/renderer/main.js',
+    ],
+
+    // This is the footer section of the UMD module:
+    footer: './src/_footer',
+  },
+
   /* eslint-enable no-multi-spaces */
   license: ['/*! ****************************************************************************',
     ' * {{lib:name}} v{{lib:version}}',

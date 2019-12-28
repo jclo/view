@@ -1,8 +1,6 @@
-// ESLint declarations:
 /* eslint one-var: 0, import/no-extraneous-dependencies: 0, semi-style: 0,
   object-curly-newline: 0 */
 
-'use strict';
 
 // -- Node modules
 const { src, dest, series, parallel } = require('gulp')
@@ -64,8 +62,6 @@ function copydev() {
 function makenoparentlib() {
   return src(`${libdir}/${name}${noparent}.js`)
     .pipe(header(license))
-    .pipe(replace('/*! *', '/** *'))
-    .pipe(replace('/* global define */', '/* global */'))
     .pipe(replace('{{lib:name}}', `${libname}`))
     .pipe(replace('{{lib:version}}', pack.version))
     .pipe(replace('{{lib:description}}', pack.description))
