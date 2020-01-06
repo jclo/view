@@ -1,5 +1,11 @@
 ### HEAD
 
+### 0.0.5 (January 6, 2020)
+
+  * Fixed a wrong library declaration in the UMD module header,
+  * ...,
+
+
 ### 0.0.4 (December 28, 2019)
 
   * Replaced the template ES6lib by ES6libplus,

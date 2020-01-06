@@ -1,9 +1,9 @@
 /*! ****************************************************************************
- * View v0.0.4
+ * View v0.0.5
  *
  * A companion View library for building web applications.
  * (you can download it from npm or github repositories)
- * Copyright (c) 2019 Mobilabs <contact@mobilabs.fr> (http://www.mobilabs.fr).
+ * Copyright (c) 2020 Mobilabs <contact@mobilabs.fr> (http://www.mobilabs.fr).
  * Released under the MIT license. You may obtain a copy of the License
  * at: http://www.opensource.org/licenses/mit-license.php).
  * ************************************************************************** */
@@ -25,7 +25,7 @@
     // This is a hack to attach the lib to the browser root when this lib is
     // included inside another lib and the whole is browserifyied:
     /* eslint-disable-next-line no-param-reassign */
-    if (root.view === null) root.view = factory(root);
+    if (root.View === null) root.View = factory(root);
   } else {
     // Browser globals.
     /* eslint-disable-next-line no-param-reassign */
@@ -221,7 +221,7 @@
     };
 
     // Attaches a constant to View that provides the version of the lib.
-    View.VERSION = '0.0.4';
+    View.VERSION = '0.0.5';
 
 
     // -- Export
