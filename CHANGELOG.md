@@ -3,7 +3,7 @@
 ### 0.0.6 (January 14, 2020)
 
   * Added the methods $().find and $().tag(),
-  * ...,
+  * Release.
 
 
 ### 0.0.5 (January 6, 2020)
