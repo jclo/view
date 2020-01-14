@@ -1,5 +1,11 @@
 ### HEAD
 
+### 0.0.6 (January 14, 2020)
+
+  * Added the methods $().find and $().tag(),
+  * ...,
+
+
 ### 0.0.5 (January 6, 2020)
 
   * Fixed a wrong library declaration in the UMD module header,

@@ -20,10 +20,13 @@
  *
  *
  * Public Methods:
- *  . select                      select a child element,
+ *  . select                      selects a child element,
  *  . selectChild                 selects the nth child,
  *  . parent                      returns to the parent element,
  *  . firstParent                 returns to the root parent if defined,
+ *
+ *  . find                        returns the NodeList of the matching children,
+ *  . tag                         returns the tag name of the selected element,
  *
  *  . html                        gets/sets the HTML contents of the element,
  *  . empty                       removes all the childs from the current node,
@@ -177,6 +180,35 @@ function $(selector) {
   };
 
   /**
+   * Returns the NodeList of the matching children.
+   *
+   * @method (arg1)
+   * @public
+   * @param {String}        the selector,
+   * @returns {Array}       returns the NodeList,
+   * @since 0.0.0
+   */
+  const find = function(sel) {
+    return this[0].querySelectorAll(sel);
+  };
+
+  /**
+   * Returns the tag name of the selected element.
+   *
+   * @method ()
+   * @public
+   * @param {}              -,
+   * @returns {String}      returns the tag name,
+   * @since 0.0.0
+   */
+  const tag = function() {
+    if (this[0]) {
+      return this[0].tagName;
+    }
+    return null;
+  };
+
+  /**
    * Gets/Sets the HTML contents of the element.
    *
    * @method (arg1)
@@ -269,7 +301,7 @@ function $(selector) {
    * @since 0.0.0
    */
   const appendAfter = function(tagName, node) {
-    const newChild = document.createElementNS(tagName)
+    const newChild = document.createElement(tagName)
         , child = this[0].querySelector(node).nextElementSibling
         ;
 
@@ -435,7 +467,7 @@ function $(selector) {
    * @since 0.0.0
    */
   const firstChild = function() {
-    return this[0].firstChild;
+    return this[0].firstElementChild;
   };
 
   /**
@@ -790,6 +822,8 @@ function $(selector) {
     selectChild,
     parent,
     firstParent,
+    find,
+    tag,
     html,
     empty,
     append,

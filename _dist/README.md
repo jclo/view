@@ -681,6 +681,9 @@ $().selectChild(n)              | selects the nth child,
 $().parent()                    | selects the parent node,
 $().firstParent()               | selects the root parent node if defined,
 
+$().find(sel)                   | returns the NodeList of the matching children,
+$().tag()                       | returns the nag name of the selected element,
+
 $().html()                      | returns the child element(s) of the selected element.
 $().html(xml)                   | replaces the child element by a new element defined by the passed-in XML string and returns this,
 $().empty()                     | removes all the child nodes and returns this,
