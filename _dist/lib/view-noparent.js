@@ -1,13 +1,13 @@
 /*! ****************************************************************************
- * View v0.0.6
+ * View v0.0.7
  *
  * A companion View library for building web applications.
  * (you can download it from npm or github repositories)
  * Copyright (c) 2020 Mobilabs <contact@mobilabs.fr> (http://www.mobilabs.fr).
  * Released under the MIT license. You may obtain a copy of the License
  * at: http://www.opensource.org/licenses/mit-license.php).
+ * Built from ES6libplus v0.0.6.
  * ************************************************************************** */
-// Based on ES6Libplus template v0.0.3
 // ESLint declarations
 /* global define */
 /* eslint no-shadow: ['error', { 'allow': ['root'] }] */
@@ -21,6 +21,7 @@
     // Node. Does not work with strict CommonJS, but
     // only CommonJS-like environments that support module.exports,
     // like Node.
+    /* eslint-disable-next-line no-param-reassign */
     module.exports = factory(root);
     // This is a hack to attach the lib to the browser root when this lib is
     // included inside another lib and the whole is browserifyied:
@@ -221,7 +222,7 @@
     };
 
     // Attaches a constant to View that provides the version of the lib.
-    View.VERSION = '0.0.6';
+    View.VERSION = '0.0.7';
 
 
     // -- Export
@@ -232,11 +233,11 @@
   /* eslint-disable one-var, semi-style, no-underscore-dangle */
 
   /** ****************************************************************************
-   * Messenger v0.0.1
+   * Messenger v0.0.2
    *
    * A tiny Javascript library to handle messages that carry a payload.
    * (you can download it from npm or github repositories)
-   * Copyright (c) 2019 Mobilabs <contact@mobilabs.fr> (http://www.mobilabs.fr).
+   * Copyright (c) 2020 Mobilabs <contact@mobilabs.fr> (http://www.mobilabs.fr).
    * Released under the MIT license. You may obtain a copy of the License
    * at: http://www.opensource.org/licenses/mit-license.php).
    * ************************************************************************** */
@@ -352,7 +353,7 @@
       };
 
       // Attaches a constant to ESLib that provides the version of the lib.
-      Messenger.VERSION = '0.0.1';
+      Messenger.VERSION = '0.0.2';
 
 
       // -- Public Static Methods ------------------------------------------------
@@ -444,7 +445,6 @@
       };
     }());
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
-
 
     /* ***************************************************************************
      *
@@ -708,7 +708,6 @@
       };
     }());
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
-
 
     // Returns the library name:
     return Messenger;

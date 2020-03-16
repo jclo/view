@@ -1,5 +1,11 @@
 ### HEAD
 
+### 0.0.7 (March 16, 2020)
+
+  * Updated the dependencies,
+  * ...,
+
+
 ### 0.0.6 (January 14, 2020)
 
   * Added the methods $().find and $().tag(),
