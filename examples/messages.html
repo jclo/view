@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Message Bus</title>
+    <link rel="stylesheet" href="">
+    <style>
+    </style>
+    <script src="../lib/view.js"></script>
+    <script>
+      window.onload = function() {
+
+        const A = View.Component({
+          events() {
+            this.$listen('toall', (message) => {
+              this.$emit('fromall', `${message}: My name is A, I got your message!`);
+            });
+          },
+          render() {
+            return '<div></div>';
+          },
+        });
+
+        const B = View.Component({
+          events() {
+            this.$listen('toall', (message) => {
+              this.$emit('fromall', `${message}: My name is B, I got your message!`);
+            });
+          },
+          render() {
+            return '<div></div>';
+          },
+        });
+
+        const view = View.render({
+          el: '#app',
+          children: { '<Aaa />': A, '<Bbb />': B },
+          template: `
+            <div>
+              <Aaa />
+              <Bbb />
+            </div>
+          `,
+        });
+
+        view.$listen('fromall', (message) => {
+          console.log(message);
+        });
+
+        view.$emit('toall', 'Is Someone listening?');
+      };
+    </script>
+  </head>
+
+  <body>
+    <div id='app'></div>
+  </body>
+</html>
