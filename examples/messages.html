@@ -9,12 +9,17 @@
     </style>
     <script src="../lib/view.js"></script>
     <script>
-      window.onload = function() {
+      document.addEventListener('DOMContentLoaded', () => {
+        /* global View */
+        'use strict';
 
         const A = View.Component({
           events() {
             this.$listen('toall', (message) => {
-              this.$emit('fromall', `${message}: My name is A, I got your message!`);
+              setTimeout(() => {
+                this.$().text(`My name is A, I got your message "${message}: "!`);
+                this.$emit('fromall', `My name is A, I got your message "${message}: "!`);
+              }, 1000);
             });
           },
           render() {
@@ -25,7 +30,10 @@
         const B = View.Component({
           events() {
             this.$listen('toall', (message) => {
-              this.$emit('fromall', `${message}: My name is B, I got your message!`);
+              setTimeout(() => {
+                this.$().text(`My name is B, I got your message "${message}: "!`);
+                this.$emit('fromall', `My name is B, I got your message "${message}"!`);
+              }, 2000);
             });
           },
           render() {
@@ -44,16 +52,15 @@
           `,
         });
 
-        view.$listen('fromall', (message) => {
-          console.log(message);
-        });
-
-        view.$emit('toall', 'Is Someone listening?');
-      };
+        setTimeout(() => {
+          view.$emit('toall', 'Is Someone listening?');
+          view.$().prepend('Is Someone listening?');
+        }, 500);
+      });
     </script>
   </head>
 
   <body>
-    <div id='app'></div>
+    <div id='app' style="margin: 2em"></div>
   </body>
 </html>

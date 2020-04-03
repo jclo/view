@@ -1,11 +1,10 @@
-/** **************************************************************************
+/** ************************************************************************
  *
- * Provides the function 'extend' that is used to fill the object tree with
- * the public static or object methods when the Javascript VM browses the
- * library from the top to the bottom. And a set of utility functions.
+ * Provides a set of utility functions.
  *
  * _.js is just a literal object that contains a set of functions. It
  * can't be intantiated.
+ *
  *
  * Private Functions:
  *  . none,
@@ -24,26 +23,27 @@
  *
  *
  *
- * @namespace    View.src.lib._
+ * @namespace    -
  * @dependencies none
  * @exports      -
  * @author       -
  * @since        0.0.0
  * @version      -
- * ************************************************************************ */
+ * ********************************************************************** */
 /* global */
-/* eslint-disable one-var, semi-style */
-
-// IIFE_START
+/* eslint-disable one-var, semi-style, no-underscore-dangle */
 
 
-// -- Local modules
+// -- Vendor Modules
 
 
-// -- Local constants
+// -- Local Modules
 
 
-// -- Local variables
+// -- Local Constants
+
+
+// -- Local Variables
 
 
 // -- Public Static Methods ------------------------------------------------
@@ -201,5 +201,4 @@ const _ = {
 // -- Export
 export default _;
 
-// IIFE_END
-/* - */
+/* eslint-enable one-var, semi-style, no-underscore-dangle */

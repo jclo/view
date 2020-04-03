@@ -1,4 +1,4 @@
-/** **************************************************************************
+/** ************************************************************************
  *
  * Defines the View object and its public method.
  *
@@ -10,6 +10,7 @@
  * view.js is just a literal object that contains a set of functions. It
  * can't be intantiated.
  *
+ *
  * Private Functions:
  *  . none,
  *
@@ -20,6 +21,7 @@
  *
  * Public Static Methods:
  *  . noConflict                  returns a reference to this View object,
+ *  . Component                   returns the extended View component,
  *  . render                      renders a View into the DOM,
  *  . restore                     restores the View Component to its initial state,
  *  . append                      appends a child to a component,
@@ -28,35 +30,37 @@
  *
  *
  *
- * @namespace    View
+ * @namespace    -
  * @dependencies none
  * @exports      -
  * @author       -
  * @since        0.0.0
  * @version      -
- * ************************************************************************ */
+ * ********************************************************************** */
 /* global root, $__TREE */
 /* eslint-disable one-var, semi-style, no-underscore-dangle */
 
-// IIFE_START
+
+// -- Vendor Modules
 
 
-// -- Local modules
+// -- Local Modules
+import C from './component/main';
 import R from './renderer/main';
 
 
-// -- Local constants
+// -- Local Constants
 // Saves the previous value of the library variable, so that it can be
 // restored later on, if noConflict is used.
 const previousView = root.View;
 
 
-// -- Local variables
+// -- Local Variables
 
 
-// -- Private & Public Static Methods --------------------------------------
+const View = {
 
-View = {
+  // -- Private Static Methods ---------------------------------------------
 
   /**
    * Returns the internal objects for testing purpose.
@@ -64,24 +68,27 @@ View = {
    * @method ()
    * @private
    * @param {}              -,
-   * @returns {Object}      returns TV tree,
+   * @returns {Object}      returns the tree object,
    * @since 0.0.0
    */
   _setTestMode() {
     return $__TREE;
   },
 
+
+  // -- Public Static Methods ----------------------------------------------
+
   /**
    * Returns a reference to this View object.
    *
    * Nota:
-   * Running View in noConflic mode, returns the View variable to its
-   * _ previous owner.
+   * Running View in noConflic mode, returns the View variable to
+   * its previous owner.
    *
    * @method ()
    * @public
    * @param {}              -,
-   * @returns {String}      returns the View object,
+   * @returns {Object}      returns the View object,
    * @since 0.0.0
    */
   /* istanbul ignore next */
@@ -89,6 +96,19 @@ View = {
     /* eslint-disable-next-line no-param-reassign */
     root.View = previousView;
     return this;
+  },
+
+  /**
+   * Returns the extended View component.
+   *
+   * @method (arg1)
+   * @public
+   * @param {Objects}       the specific properties of the created component,
+   * @returns {Object}      returns the extented component function,
+   * @since 0.0.0
+   */
+  Component(methods) {
+    return C.Component(methods);
   },
 
   /**
@@ -172,7 +192,6 @@ View.VERSION = '{{lib:version}}';
 
 
 // -- Export
-// none (View is attached to the global window)
+export default View;
 
-// IIFE_END
-/* eslint-disable one-var, semi-style, no-underscore-dangle */
+/* eslint-enable one-var, semi-style, no-underscore-dangle */

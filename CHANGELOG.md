@@ -1,5 +1,12 @@
 ### HEAD
 
+
+### 0.0.8 (April 3, 2020)
+
+  * Updated the project with the boilerplate ES6Kadoo v0.0.0,
+  * ...,
+
+
 ### 0.0.7 (March 16, 2020)
 
   * Updated the dependencies,

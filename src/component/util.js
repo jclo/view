@@ -1,9 +1,10 @@
-/** **************************************************************************
+/** ************************************************************************
  *
  * A set of utility functions for View.Component.
  *
  * util.js is just a literal object that contains a set of functions. It
  * can't be intantiated.
+ *
  *
  * Private Functions:
  *  . _getList                    processes the children list,
@@ -16,27 +17,28 @@
  *
  *
  *
- * @namespace    View.src.component.util
+ * @namespace    -
  * @dependencies none
  * @exports      -
  * @author       -
  * @since        0.0.0
  * @version      -
- * ************************************************************************ */
+ * ********************************************************************** */
 /* global */
 /* eslint-disable one-var, semi-style, no-underscore-dangle */
 
-// IIFE_START
+
+// -- Vendor Modules
 
 
-// -- Local modules
+// -- Local Modules
 import _ from '../lib/_';
 
 
-// -- Local constants
+// -- Local Constants
 
 
-// -- Local variables
+// -- Local Variables
 
 
 // -- Private Functions ----------------------------------------------------
@@ -130,5 +132,4 @@ const Util = {
 // -- Export
 export default Util;
 
-// IIFE_END
 /* eslint-enable one-var, semi-style, no-underscore-dangle */

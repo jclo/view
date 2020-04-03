@@ -1,16 +1,17 @@
-/** **************************************************************************
+/** ************************************************************************
  *
  * Defines the function that extends a child component from Generic and
  * returns the child component constructor.
  *
- * main.js is just a literal object that contains a set of functions. It
- * can't be intantiated.
+ * main.js is built upon the Prototypal Instantiation pattern. It
+ * returns an object by calling its constructor. It doesn't use the new
+ * keyword.
  *
  * Private Functions:
  *  . none,
  *
  *
- * Public Static Methods:
+ * Constructor:
  *  . Component                   returns the child component constructor,
  *
  *
@@ -19,30 +20,40 @@
  *  . Component._removeChild      removes a child from the passed-in component,
  *
  *
+ * Public Static Methods:
+ *  . none,
  *
- * @namespace    View.src.component.main
+ *
+ * Public Methods:
+ *  . none,
+ *
+ *
+ *
+ * @namespace    -
  * @dependencies none
  * @exports      -
  * @author       -
  * @since        0.0.0
  * @version      -
- * ************************************************************************ */
-/* global View */
-/* eslint-disable no-underscore-dangle */
-
-// IIFE_START
+ * ********************************************************************** */
+/* global */
+/* eslint-disable one-var, semi-style, no-underscore-dangle */
 
 
-// -- Local modules
+// -- Vendor Modules
+
+
+// -- Local Modules
 import _ from '../lib/_';
 import Generic from './generic';
+import Dollar from './$';
 import R from './render';
 
 
-// -- Local constants
+// -- Local Constants
 
 
-// -- Local variables
+// -- Local Variables
 
 
 // -- Public ---------------------------------------------------------------
@@ -61,7 +72,7 @@ import R from './render';
  * @since 0.0.0
  */
 /* eslint-disable prefer-rest-params */
-View.Component = function(methods) {
+function Component(methods) {
   let args;
   const Child = function() {
     if (this instanceof Child) {
@@ -77,11 +88,15 @@ View.Component = function(methods) {
   // copy the references instead of cloning the methods. And all the childs
   // will get the methods of the last created child.
   const p1 = _.assign({}, Generic.methods);
-  Child.prototype = _.assign(p1, methods);
+  const p2 = _.assign(p1, { $: Dollar.$ });
+  Child.prototype = _.assign(p2, methods);
   Child.prototype.constructor = Child;
   return Child;
-};
+}
 /* eslint-enable prefer-rest-params */
+
+
+// -- Semi Private Static Methods ------------------------------------------
 
 /**
  * Attaches a child to the passed-in component.
@@ -95,7 +110,7 @@ View.Component = function(methods) {
  * @returns {}              -,
  * @since 0.0.0
  */
-View.Component._attachChild = function(co, child, options, tag) {
+Component._attachChild = function(co, child, options, tag) {
   R.attachChild(co, child, options, tag);
 };
 
@@ -109,13 +124,12 @@ View.Component._attachChild = function(co, child, options, tag) {
  * @returns {}              -,
  * @since 0.0.0
  */
-View.Component._removeChild = function(co, child) {
+Component._removeChild = function(co, child) {
   R.removeChild(co, child);
 };
 
 
 // -- Export
-// nothing as View is global inside the UMD module;
+export default { Component };
 
-// IIFE_END
-/* eslint-enable no-underscore-dangle */
+/* eslint-enable one-var, semi-style, no-underscore-dangle */

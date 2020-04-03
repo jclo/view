@@ -1,9 +1,10 @@
-/** **************************************************************************
+/** ************************************************************************
  *
  * Performs a custom animation on a set of CSS properties.
  *
  * animate.js is just a literal object that contains a set of functions. It
  * can't be intantiated.
+ *
  *
  * Private Functions:
  *  . _swing                      defines the default easing method,
@@ -19,27 +20,28 @@
  *
  *
  *
- * @namespace    View.src.component.animate
+ * @namespace    -
  * @dependencies none
  * @exports      -
  * @author       -
  * @since        0.0.0
  * @version      -
- * ************************************************************************ */
+ * ********************************************************************** */
 /* global */
 /* eslint-disable one-var, semi-style, no-underscore-dangle */
 
-// IIFE_START
+
+// -- Vendor Modules
 
 
-// -- Local modules
+// -- Local Modules
 import _ from '../lib/_';
 
 
-// -- Local constants
+// -- Local Constants
 
 
-// -- Local variables
+// -- Local Variables
 
 
 // -- Private Functions ----------------------------------------------------
@@ -328,5 +330,4 @@ const Anim = {
 // -- Export
 export default Anim;
 
-// IIFE_END
 /* eslint-enable one-var, semi-style, no-underscore-dangle */

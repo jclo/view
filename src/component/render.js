@@ -1,9 +1,10 @@
-/** **************************************************************************
+/** ************************************************************************
  *
  * Implements the _renderer method.
  *
  * render.js is just a literal object that contains a set of functions. It
  * can't be intantiated.
+ *
  *
  * Private Functions:
  *  . _format                     formats the children object,
@@ -15,28 +16,29 @@
  *
  *
  *
- * @namespace    View.src.component.render
+ * @namespace    -
  * @dependencies none
  * @exports      -
  * @author       -
  * @since        0.0.0
  * @version      -
- * ************************************************************************ */
+ * ********************************************************************** */
 /* global */
 /* eslint-disable one-var, semi-style, no-underscore-dangle */
 
-// IIFE_START
+
+// -- Vendor Modules
 
 
-// -- Local modules
+// -- Local Modules
 import _ from '../lib/_';
 import Hyper from './hyperscript';
 
 
-// -- Local constants
+// -- Local Constants
 
 
-// -- Local variables
+// -- Local Variables
 
 
 // -- Private Functions ----------------------------------------------------
@@ -252,5 +254,4 @@ const Render = {
 // -- Export
 export default Render;
 
-// IIFE_END
 /* eslint-enable one-var, semi-style, no-underscore-dangle */

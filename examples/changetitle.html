@@ -9,7 +9,9 @@
     </style>
     <script src="../lib/view.js"></script>
     <script>
-      window.onload = function() {
+      document.addEventListener('DOMContentLoaded', () => {
+        /* global View */
+        'use strict';
 
         const A = View.Component({
           updateTitle(newtitle) {
@@ -39,7 +41,7 @@
         setTimeout(() => {
           a.updateTitle('New Title');
         }, 1000);
-      };
+      });
     </script>
   </head>
 

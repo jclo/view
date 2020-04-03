@@ -1,9 +1,10 @@
-/** **************************************************************************
+/** ************************************************************************
  *
  * Converts an hyperscript object to a node element.
  *
- * hyperscript.js is just a literal object that contains a set of functions. It
- * can't be intantiated.
+ * hyperscript.js is just a literal object that contains a set of functions.
+ * It can't be intantiated.
+ *
  *
  * Private Functions:
  *  . _reshuffle                  rebuilds the component tags,
@@ -16,27 +17,28 @@
  *
  *
  *
- * @namespace    View.src.component.hyperscript
+ * @namespace    -
  * @dependencies none
  * @exports      -
  * @author       -
  * @since        0.0.0
  * @version      -
- * ************************************************************************ */
+ * ********************************************************************** */
 /* global */
 /* eslint-disable one-var, semi-style, no-underscore-dangle */
 
-// IIFE_START
+
+// -- Vendor Modules
 
 
-// -- Local modules
+// -- Local Modules
 import _ from '../lib/_';
 
 
-// -- Local constants
+// -- Local Constants
 
 
-// -- Local variables
+// -- Local Variables
 
 
 // -- Private Functions ----------------------------------------------------
@@ -217,5 +219,4 @@ const Hyperscript = {
 // -- Export
 export default Hyperscript;
 
-// IIFE_END
 /* eslint-enable one-var, semi-style, no-underscore-dangle */

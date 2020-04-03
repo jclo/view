@@ -3,17 +3,17 @@
 /* eslint  one-var: 0, semi-style: 0, no-underscore-dangle: 0 */
 
 
-// -- Node modules
+// -- Vendor Modules
 const { expect } = require('chai')
     ;
 
-// -- Local modules
+// -- Local Modules
 
 
-// -- Local constants
+// -- Local Constants
 
 
-// -- Local variables
+// -- Local Variables
 
 
 // -- Main

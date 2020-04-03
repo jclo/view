@@ -1,13 +1,16 @@
-/** **************************************************************************
+/** ************************************************************************
  *
  * Defines the generic component. All the created components extend this
  * component.
  *
- * generic.js is just a literal object that contains a set of functions. It
- * can't be intantiated.
+ * generic.js is built upon the Prototypal Instantiation pattern. It
+ * returns an object by calling its constructor. It doesn't use the new
+ * keyword.
+ *
  *
  * Private Functions:
  *  . none,
+ *
  *
  * Constructor:
  *  . Construct                   constructor,
@@ -49,30 +52,30 @@
  *
  *
  *
- * @namespace    View.src.component.generic
+ * @namespace    -
  * @dependencies none
  * @exports      -
  * @author       -
  * @since        0.0.0
  * @version      -
- * ************************************************************************ */
+ * ********************************************************************** */
 /* global */
 /* eslint-disable one-var, semi-style, no-underscore-dangle */
 
-// IIFE_START
+
+// -- Vendor Modules
 
 
-// -- Local modules
+// -- Local Modules
 import _ from '../lib/_';
-import Dollar from './$';
 import R from './render';
 import Util from './util';
 
 
-// -- Local constants
+// -- Local Constants
 
 
-// -- Local variables
+// -- Local Variables
 
 
 // -- Public ---------------------------------------------------------------
@@ -148,13 +151,16 @@ const methods = {
    * Returns an object to manipulate the component in the DOM.
    * (must not be overwritten - see implementation in $.js)
    *
+   * Nota: $ is filled when the View.Component is created
+   * (see main.js constructor).
+   *
    * @method (arg1)
    * @public
    * @param {String}        the node selector (id or class),
    * @returns {Object}      returns the $ object,
    * @since 0.0.0
    */
-  $: Dollar.$,
+  $: null,
 
   /**
    * Returns an XMLString representation of the hyperscript template.
@@ -369,5 +375,4 @@ const methods = {
 // -- Export
 export default { Construct, methods };
 
-// IIFE_END
 /* eslint-enable one-var, semi-style, no-underscore-dangle */

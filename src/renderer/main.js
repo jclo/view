@@ -1,9 +1,10 @@
-/** **************************************************************************
+/** ************************************************************************
  *
  * Implements the View methods to render and attach a component to the DOM.
  *
  * main.js is just a literal object that contains a set of functions. It
  * can't be intantiated.
+ *
  *
  * Private Functions:
  *  . _fireEvents                 fires the DOM events,
@@ -26,28 +27,30 @@
  *
  *
  *
- * @namespace    View.src.renderer.main
+ * @namespace    -
  * @dependencies none
  * @exports      -
  * @author       -
  * @since        0.0.0
  * @version      -
- * ************************************************************************ */
-/* global View  */
+ * ********************************************************************** */
+/* global */
 /* eslint-disable one-var, semi-style, no-underscore-dangle */
 
-// IIFE_START
+
+// -- Vendor Modules
+import Messenger from '@mobilabs/messenger';
 
 
-// -- Local modules
-import Messenger from '../libin/messenger';
+// -- Local Modules
+import V from '../component/main';
 import _ from '../lib/_';
 
 
-// -- Local constants
+// -- Local Constants
 
 
-// -- Local variables
+// -- Local Variables
 
 
 // -- Private Functions ----------------------------------------------------
@@ -203,12 +206,12 @@ function _componenterize(options) {
   if (options.methods) {
     m = options.methods;
   }
-  const C = View.Component(_.extend(m, {
+  const Comp = V.Component(_.extend(m, {
     render() {
       return xmlNode;
     },
   }));
-  const view = C();
+  const view = Comp();
   const xmlNewNode = view._renderer();
   const template = document.createElement('template');
   template.innerHTML = xmlNewNode;
@@ -257,7 +260,7 @@ function _render(options) {
   }
 
   // Ok. Create the root component and attach it to the DOM:
-  const RootComp = View.Component({
+  const RootComp = V.Component({
     render() {
       this.name = 'firstparent';
       this.children = opt.children;
@@ -332,7 +335,9 @@ function _insertToDOM(parent, tag, el, position) {
       parent.$(el).appendHTML(XMLString);
     }
   } else {
-    console.log('warning: View.append: params.el is not valid! Component appended to the parent node.');
+    console.log(
+      'warning: View.append: params.el is not valid! Component appended to the parent node.',
+    );
     if (position === 'first') {
       parent.$().prepend(XMLString);
     } else {
@@ -413,7 +418,7 @@ function _insert(params, position) {
       return null;
     }
 
-    View.Component._attachChild(p, fn, opts, tag);
+    V.Component._attachChild(p, fn, opts, tag);
     _insertToDOM(p, tag, el, position);
 
     co = p.$getChild(tag);
@@ -474,7 +479,7 @@ function _remove(params) {
   const el = p.$(`#${co.id}`)[0];
   p.$(`#${co.id}`).parent().removeChild(el);
 
-  View.Component._removeChild(p, children);
+  V.Component._removeChild(p, children);
 
   return true;
 }
@@ -560,5 +565,4 @@ const Renderer = {
 // -- Export
 export default Renderer;
 
-// IIFE_END
 /* eslint-enable one-var, semi-style, no-underscore-dangle */

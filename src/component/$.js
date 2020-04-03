@@ -1,10 +1,11 @@
-/** **************************************************************************
+/** ************************************************************************
  *
  * Implements the methods to manipulate the DOM.
  *
  * $.js is just an object that contains a set of methods. It implements the
- * pattern factory. Thus, $(sel) returns the selected node and the methods
+ * factory pattern. Thus, $(sel) returns the selected node and the methods
  * listed below.
+ *
  *
  * Private Functions:
  *  . none,
@@ -75,27 +76,28 @@
  *
  *
  *
- * @namespace    View.src.component.$
+ * @namespace    -
  * @dependencies none
  * @exports      -
  * @author       -
  * @since        0.0.0
  * @version      -
- * ************************************************************************ */
+ * ********************************************************************** */
 /* global */
 /* eslint-disable one-var, semi-style, no-underscore-dangle */
 
-// IIFE_START
+
+// -- Vendor Modules
 
 
-// -- Local modules
+// -- Local Modules
 import Anim from './animate';
 
 
-// -- Local constants
+// -- Local Constants
 
 
-// -- Local variables
+// -- Local Variables
 
 
 // -- Public Methods -------------------------------------------------------
@@ -866,5 +868,4 @@ function $(selector) {
 // -- Export
 export default { $ };
 
-// IIFE_END
 /* eslint-enable one-var, semi-style, no-underscore-dangle */

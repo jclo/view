@@ -3,22 +3,24 @@
 /* eslint one-var: 0, no-unused-vars: 0, semi-style: 0 */
 
 
-// -- Node modules
+// -- Vendor Modules
 const { JSDOM }  = require('jsdom')
     ;
 
 
-// -- Local modules
-const View     = require('../index.js')
-    , messenger = require('./messenger/main.js')
+// -- Local Modules
+const View     = require('../src/view').default
     , testview = require('./int/view.js')
     ;
 
 
-// -- Local constants
+// -- Local Constants
 
 
-// -- Local variables
+// -- Local Variables
+
+
+// -- Main
 
 // Create a Virtual DOM:
 const HTML = `
@@ -37,9 +39,6 @@ global.window = dom.window;
 global.document = dom.window.document;
 global.navigator = { userAgent: 'node.js' };
 
-
-// -- Main
 describe('Test View:', () => {
-  messenger(View);
   testview(View);
 });
