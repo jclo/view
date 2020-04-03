@@ -57,7 +57,7 @@
     "gulp-uglify-es": "^2.0.0",
     "husky": "^4.2.3",
     "jsdom": "^16.2.2",
-    "kadoo": "file:../../Utilities/Kadoo",
+    "kadoo": "0.0.0-beta.2",
     "mocha": "^7.1.0",
     "nyc": "^15.0.0",
     "open": "^7.0.3",
