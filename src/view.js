@@ -37,7 +37,7 @@
  * @since        0.0.0
  * @version      -
  * ********************************************************************** */
-/* global root, $__TREE */
+/* global root */
 /* eslint-disable one-var, semi-style, no-underscore-dangle */
 
 
@@ -47,6 +47,8 @@
 // -- Local Modules
 import C from './component/main';
 import R from './renderer/main';
+import _ from './lib/_';
+import Hyperscript from './component/hyperscript';
 
 
 // -- Local Constants
@@ -68,11 +70,11 @@ const View = {
    * @method ()
    * @private
    * @param {}              -,
-   * @returns {Object}      returns the tree object,
+   * @returns {Array}       returns internal objects,
    * @since 0.0.0
    */
   _setTestMode() {
-    return $__TREE;
+    return [_, C.Component, Hyperscript];
   },
 
 

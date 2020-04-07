@@ -89,7 +89,7 @@ function Component(methods) {
   // will get the methods of the last created child.
   const p1 = _.assign({}, Generic.methods);
   const p2 = _.assign(p1, { $: Dollar.$ });
-  Child.prototype = _.assign(p2, methods);
+  Child.prototype = _.assign(p2, methods || {});
   Child.prototype.constructor = Child;
   return Child;
 }

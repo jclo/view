@@ -293,7 +293,7 @@ function _render(options) {
  * @since 0.0.0
  */
 function _restore(view) {
-  if (view._initialXMLNode) {
+  if (view && view._initialXMLNode) {
     const template = document.createElement('template');
     template.innerHTML = view._initialXMLNode;
     const iNode = template.content.firstChild;

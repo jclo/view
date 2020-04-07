@@ -154,9 +154,9 @@ function $(selector) {
    * @since 0.0.0
    */
   const parent = function() {
-    if (this.root) {
+    if (this._root) {
       // As a root parent is defined, we stop at it.
-      if (this[0] !== this.root) {
+      if (this[0] !== this._root) {
         this[0] = this[0].parentNode;
       }
     } else {
@@ -422,6 +422,7 @@ function $(selector) {
       wrapper.innerHTML = xmlString;
       const newChild = wrapper.firstChild;
       parento.replaceChild(newChild, oldChild);
+      this[0] = newChild;
     }
     return this;
   };

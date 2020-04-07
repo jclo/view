@@ -18,18 +18,24 @@ const { expect } = require('chai')
 
 // -- Main
 module.exports = function(View) {
-  describe('Test View library:', () => {
-    // Test the lib:
-    describe('Test View.VERSION, View._setTestMode and View.noConflict:', () => {
-      it('Expects View.VERSION to return a string.', () => {
-        expect(View.VERSION).to.be.a('string');
-      });
-      it('Expects View._setTestMode to return a function.', () => {
-        expect(View._setTestMode).to.be.a('function');
-      });
-      it('Expects View.noConflict to return a function.', () => {
-        expect(View.noConflict).to.be.a('function');
-      });
+  // Test the lib:
+  describe('Test View.VERSION, View._setTestMode and View.noConflict:', () => {
+    it('Expects View.VERSION to return a string.', () => {
+      expect(View.VERSION).to.be.a('string');
+    });
+
+    it('Expects View._setTestMode to be a function.', () => {
+      expect(View._setTestMode).to.be.a('function');
+    });
+    // it('Expects View._setTestMode() to return an object.', () => {
+    //   expect(View._setTestMode()).to.be.an('object');
+    // });
+
+    it('Expects View.noConflict to be a function.', () => {
+      expect(View.noConflict).to.be.a('function');
+    });
+    it('Expects View.noConflict() to return an object.', () => {
+      expect(View.noConflict()).to.be.an('object');
     });
   });
 };
