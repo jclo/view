@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * View v0.0.8-beta.1
+ * View v0.0.8-beta.2
  *
  * A companion View library for building web applications.
  * (you can download it from npm or github repositories)
@@ -239,7 +239,7 @@
     };
 
     // Attaches a constant to View that provides the version of the lib.
-    View.VERSION = '0.0.8-beta.1';
+    View.VERSION = '0.0.8-beta.2';
 
 
     // -- Export

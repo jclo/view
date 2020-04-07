@@ -6,6 +6,7 @@
   * Updated the project with the boilerplate ES6Kadoo v0.0.0,
   * First release candidate (beta.1),
   * Added more unitary tests,
+  * Second release candidate (beta.2),
   * ...,
 
 
