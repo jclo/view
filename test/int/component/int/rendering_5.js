@@ -20,35 +20,35 @@ const { expect } = require('chai')
 // -- Main
 module.exports = function(View, app) {
   describe('Test the inherited property $emit:', () => {
-    it('expects it to inherit the property $emit that is a function.', () => {
+    it('Expects it to inherit the property $emit that is a function.', () => {
       expect(Object.getPrototypeOf(app)).to.own.property('$emit').that.is.a('function');
     });
 
-    it('expects $emit() to return an object.', () => {
+    it('Expects $emit() to return an object.', () => {
       expect(app.$emit()).to.be.an('object');
     });
 
-    it('expects this object to be the parent of the property $emit.', () => {
+    it('Expects this object to be the parent of the property $emit.', () => {
       expect(app.$emit().id === app.id).to.be.true;
     });
   });
 
   describe('Test the inherited property $listen:', () => {
-    it('expects it to inherit the property $listen that is a function.', () => {
+    it('Expects it to inherit the property $listen that is a function.', () => {
       expect(Object.getPrototypeOf(app)).to.own.property('$listen').that.is.a('function');
     });
 
-    it('expects $listen() to return an object.', () => {
+    it('Expects $listen() to return an object.', () => {
       expect(app.$listen()).to.be.an('object');
     });
 
-    it('expects this object to be the parent of the property $listen.', () => {
+    it('Expects this object to be the parent of the property $listen.', () => {
       expect(app.$listen().id === app.id).to.be.true;
     });
   });
 
   describe('Test the interaction between $listen and $emit:', () => {
-    it('expects $listen("msg", (payload)) to get the payload sent by $emit("msg", payload).', (done) => {
+    it('Expects $listen("msg", (payload)) to get the payload sent by $emit("msg", payload).', (done) => {
       app.$listen('msg', (data) => {
         expect(data === 'payload').to.be.true;
         done();

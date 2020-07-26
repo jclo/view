@@ -69,6 +69,7 @@
  *  . removeAttr                  removes the specified attribute,
  *
  *  . animate                     performs an animation,
+ *  . diff                        updates the node to match the passed-in template,
  *
  *  . on                          attachs an event listener to the current node,
  *  . off                         removes an event listener from the current node,
@@ -92,6 +93,7 @@
 
 // -- Local Modules
 import Anim from './animate';
+import Differ from './diffing';
 
 
 // -- Local Constants
@@ -764,6 +766,20 @@ function $(selector) {
   };
 
   /**
+   * Updates the DOM node from the passed-in template.
+   *
+   * @method (arg1)
+   * @public
+   * @param {XMLString}     the template,
+   * @returns {Object}      returns this,
+   * @since 0.0.0
+   */
+  const diff = function(XMLString) {
+    Differ.diff(Differ.stringToHTML(XMLString), this[0]);
+    return this;
+  };
+
+  /**
    * Attachs an event listener to the current node.
    *
    * @method (arg1, arg2)
@@ -859,6 +875,7 @@ function $(selector) {
     attr,
     removeAttr,
     animate,
+    diff,
     on,
     off,
     trigger,

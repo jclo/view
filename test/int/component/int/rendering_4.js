@@ -20,60 +20,60 @@ const { expect } = require('chai')
 // -- Main
 module.exports = function(View, app) {
   describe('Test the inherited property $getChild:', () => {
-    it('expects it to inherit the property $getChild that is a function.', () => {
+    it('Expects it to inherit the property $getChild that is a function.', () => {
       expect(Object.getPrototypeOf(app)).to.own.property('$getChild').that.is.a('function');
     });
 
-    it('expects $getChild() to return null.', () => {
+    it('Expects $getChild() to return null.', () => {
       expect(app.$getChild()).to.be.equal(null);
     });
 
-    it('expects $getChild("<C /") to return an object.', () => {
+    it('Expects $getChild("<C /") to return an object.', () => {
       expect(app.$getChild('<C />')).to.be.an('object');
     });
 
-    it('expects this object to be a View.Component.', () => {
+    it('Expects this object to be a View.Component.', () => {
       expect(app.$getChild('<C />')).to.own.property('_tag').that.is.a('string').that.is.equal('<C />');
     });
   });
 
   describe('Test the inherited property $getChildren:', () => {
-    it('expects it to inherit the property $getChildren that is a function.', () => {
+    it('Expects it to inherit the property $getChildren that is a function.', () => {
       expect(Object.getPrototypeOf(app)).to.own.property('$getChildren').that.is.a('function');
     });
 
-    it('expects $getChildren() to return an array.', () => {
+    it('Expects $getChildren() to return an array.', () => {
       expect(app.$getChildren()).to.be.an('array');
     });
 
-    it('expects this array to contains one element.', () => {
+    it('Expects this array to contains one element.', () => {
       expect(app.$getChildren()).to.be.an('array').that.has.lengthOf(1);
     });
 
-    it('expects this element to be an object.', () => {
+    it('Expects this element to be an object.', () => {
       expect(app.$getChildren()[0]).to.be.an('object');
     });
 
-    it('expects this object to own two properties.', () => {
+    it('Expects this object to own two properties.', () => {
       expect(Object.getOwnPropertyNames(app.$getChildren()[0]))
         .to.be.an('array').that.has.a.lengthOf(2);
     });
 
-    it('expects the first property to be "id".', () => {
+    it('Expects the first property to be "id".', () => {
       expect(app.$getChildren()[0]).to.own.property('id');
     });
 
-    it('expects the second property to be "name".', () => {
+    it('Expects the second property to be "name".', () => {
       expect(app.$getChildren()[0]).to.own.property('name');
     });
 
-    it('expects this id to be the id of $getChild("<C />").', () => {
+    it('Expects this id to be the id of $getChild("<C />").', () => {
       const wc = app.$getChild('<C />');
       const { id } = app.$getChildren()[0];
       expect(id === wc.id).to.be.true;
     });
 
-    it('expects this name to be the name of $getChild("<C />").', () => {
+    it('Expects this name to be the name of $getChild("<C />").', () => {
       const wc = app.$getChild('<C />');
       const { name } = app.$getChildren()[0];
       expect(name === wc.name).to.be.true;
@@ -81,34 +81,34 @@ module.exports = function(View, app) {
   });
 
   describe('Test the inherited property $getIdAndName:', () => {
-    it('expects it to inherit the property $getIdAndName that is a function.', () => {
+    it('Expects it to inherit the property $getIdAndName that is a function.', () => {
       expect(Object.getPrototypeOf(app)).to.own.property('$getIdAndName').that.is.a('function');
     });
 
-    it('expects $getIdAndName() to return an object.', () => {
+    it('Expects $getIdAndName() to return an object.', () => {
       expect(app.$getIdAndName()).to.be.an('object');
     });
 
 
-    it('expects this object to own two properties.', () => {
+    it('Expects this object to own two properties.', () => {
       expect(Object.getOwnPropertyNames(app.$getIdAndName()))
         .to.be.an('array').that.has.a.lengthOf(2);
     });
 
-    it('expects the first property to be "id".', () => {
+    it('Expects the first property to be "id".', () => {
       expect(app.$getIdAndName()).to.own.property('id');
     });
 
-    it('expects the second property to be "name".', () => {
+    it('Expects the second property to be "name".', () => {
       expect(app.$getIdAndName()).to.own.property('name');
     });
 
-    it('expects the returned id of $getChild("<C />").$getIdAndName() to be $getChild("<C />").id.', () => {
+    it('Expects the returned id of $getChild("<C />").$getIdAndName() to be $getChild("<C />").id.', () => {
       const wc = app.$getChild('<C />');
       expect(wc.$getIdAndName().id === wc.id).to.be.true;
     });
 
-    it('expects the returned id of $getChild("<C />").$getIdAndName() to be $getChild("<C />").name.', () => {
+    it('Expects the returned id of $getChild("<C />").$getIdAndName() to be $getChild("<C />").name.', () => {
       const wc = app.$getChild('<C />');
       expect(wc.$getIdAndName().name === wc.name).to.be.true;
     });

@@ -20,39 +20,39 @@ const { expect } = require('chai')
 // -- Main
 module.exports = function(View, app) {
   describe('Test the $() methods attr, removeAttr:', () => {
-    it('expects $("h1").attr("href", "#") to add this attribute to the node.', () => {
+    it('Expects $("h1").attr("href", "#") to add this attribute to the node.', () => {
       app.$('h1').attr('href', '#');
       const el = app.$('h1')[0];
       const a = el.getAttribute('href');
       expect(a).to.be.a('string').that.is.equal('#');
     });
 
-    it('expects $("h1").attr("href") to return this attribute value from the node.', () => {
+    it('Expects $("h1").attr("href") to return this attribute value from the node.', () => {
       expect(app.$('h1').attr('href')).to.be.a('string').that.is.equal('#');
     });
 
-    it('expects $("h1").removeAttr("href") to remove this attribute from the node.', () => {
+    it('Expects $("h1").removeAttr("href") to remove this attribute from the node.', () => {
       app.$('h1').removeAttr('href');
       const el = app.$('h1')[0];
       const a = el.getAttribute('href');
       expect(a).to.be.equal(null);
     });
 
-    it('expects $("h1").removeAttr() to return "this".', () => {
+    it('Expects $("h1").removeAttr() to return "this".', () => {
       expect(app.$('h1').removeAttr()).to.be.an('object');
     });
   });
 
   describe('Test the $() methods on, off, trigger:', () => {
-    it('expects $().on("click") to return "this".', () => {
+    it('Expects $().on("click") to return "this".', () => {
       expect(app.$().on('click')).to.be.an('object');
     });
 
-    it('expects $().off("click") to return "this".', () => {
+    it('Expects $().off("click") to return "this".', () => {
       expect(app.$().off('click')).to.be.an('object');
     });
 
-    it('expects $().trigger("click") to return true.', () => {
+    it('Expects $().trigger("click") to return true.', () => {
       // expect(app.$().trigger('click')).to.be.true;
     });
   });

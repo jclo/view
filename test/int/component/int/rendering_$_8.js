@@ -52,7 +52,7 @@ module.exports = function(View, id) {
 
 
   describe('Test the $() method animate:', () => {
-    it('expects $("...").animate(...args) to increase the value of top from 0 to 500px.', (done) => {
+    it('Expects $("...").animate(...args) to increase the value of top from 0 to 500px.', (done) => {
       const c = app.$getChild('<Aaa />');
       c.animate({ top: '500px', left: '800px' }, 'slow', 'swing', () => {
         let top = c.$('.rect').css('top').replace('px', '');

@@ -55,44 +55,44 @@ module.exports = function(View) {
 
   // Test the lib:
   describe('Test View.render & View.restore:', () => {
-    it('expects View.render({ el: "#app" }) to return an object.', () => {
+    it('Expects View.render({ el: "#app" }) to return an object.', () => {
       expect(app1).to.be.an('object');
     });
 
-    it('expects this object to own, at least, the property "_cList", thus to be a View.Component.', () => {
+    it('Expects this object to own, at least, the property "_cList", thus to be a View.Component.', () => {
       expect(app1).to.own.property('_cList');
     });
 
-    it('expects this object to own the extra property "_initialXMLNode".', () => {
+    it('Expects this object to own the extra property "_initialXMLNode".', () => {
       expect(app1).to.own.property('_initialXMLNode');
     });
 
-    it('expects this property value to be "<div id="appR2"></div>".', () => {
+    it('Expects this property value to be "<div id="appR2"></div>".', () => {
       expect(app1._initialXMLNode).to.be.a('string').that.is.equal('<div id="appR2"></div>');
     });
 
-    it('expects $().append("h1") to add a child to the View.Component.', () => {
+    it('Expects $().append("h1") to add a child to the View.Component.', () => {
       app1.$().append('h1');
       const el = app1.$()[0].firstElementChild.outerHTML;
       expect(el).to.be.a('string').that.is.equal('<h1></h1>');
     });
 
-    it('expects View.restore("View.Component") to return true.', () => {
+    it('Expects View.restore("View.Component") to return true.', () => {
       expect(View.restore(app1)).to.be.true;
     });
 
-    it('expects View.restore("View.Component") to restore this node to its initial state.', () => {
+    it('Expects View.restore("View.Component") to restore this node to its initial state.', () => {
       const el = document.querySelector('#appR2').outerHTML;
       expect(el).to.be.a('string').that.is.equal('<div id="appR2"></div>');
     });
 
-    it('expects View.restore() to return false.', () => {
+    it('Expects View.restore() to return false.', () => {
       expect(View.restore()).to.be.false;
     });
   });
 
   describe('Test View.append & View.prepend & View.remove:', () => {
-    it('expects View.append({...}) to insert the passed-in component as the second child of C1.', () => {
+    it('Expects View.append({...}) to insert the passed-in component as the second child of C1.', () => {
       const c1 = app2.$getChild('<C1 />');
 
       View.append({
@@ -103,7 +103,7 @@ module.exports = function(View) {
       expect(app2.$('.c1').selectChild(1).hasClass('c2')).to.be.true;
     });
 
-    it('expects View.prepend({...}) to insert the passed-in component as the first child of C1.', () => {
+    it('Expects View.prepend({...}) to insert the passed-in component as the first child of C1.', () => {
       View.prepend({
         root: app2,
         parent: '<C1 />',
@@ -112,7 +112,7 @@ module.exports = function(View) {
       expect(app2.$('.c1').selectChild(0).hasClass('c3')).to.be.true;
     });
 
-    it('expects View.remove({...}) to remove the second child of C1.', () => {
+    it('Expects View.remove({...}) to remove the second child of C1.', () => {
       const c1 = app2.$getChild('<C1 />');
 
       const b = View.remove({
@@ -123,7 +123,7 @@ module.exports = function(View) {
       expect(b).to.be.true;
     });
 
-    it('expects View.remove({...}) to remove the first child of C1.', () => {
+    it('Expects View.remove({...}) to remove the first child of C1.', () => {
       const b = View.remove({
         root: app2,
         parent: '<C1 />',

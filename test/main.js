@@ -19,6 +19,7 @@ const View = require('../src/view').default
     , test$ = require('./int/component/props$')
     , testcomp1 = require('./int/component/webcomp')
     , testhyper = require('./int/component/hyperscript')
+    , testdiff = require('./int/component/diffing')
     , testcrender = require('./int/component/rendering')
 
     , testrender2 = require('./int/renderer/render_2')
@@ -53,6 +54,14 @@ const HTML = `
       <div id="appC7"></div>
       <div id="appC8"></div>
       <div id="appC9"></div>
+      <div id="appC10"></div>
+
+      <div id="appD1"></div>
+      <div id="appD2"><p>a</p><p>b</p><p>c</p></div>
+      <div id="appD3"></div>
+      <div id="appD4"><h2>My Todos</h2><ul><li>Swim</li><li>Climb</li><li>Jump</li><li>Play</li><li>Take a nap...</li></ul></div>
+      <div id="appD5"><h2>My Todos</h2><ul></ul></div>
+
     </body>
   </html>
 `;
@@ -62,6 +71,7 @@ global.window = dom.window;
 global.document = dom.window.document;
 global.navigator = { userAgent: 'node.js' };
 global.XMLSerializer = XMLSerializer;
+global.DOMParser = dom.window.DOMParser;
 
 describe('Test View Library:', () => {
   test_(View);
@@ -75,6 +85,7 @@ describe('Test View Library:', () => {
   test$(View);
   testcomp1(View);
   testhyper(View);
+  testdiff(View);
   testcrender(View);
 
   // test View.render/restore/remove/replace

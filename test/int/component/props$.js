@@ -32,8 +32,8 @@ module.exports = function(View) {
       expect(o.$()).to.be.an('object');
     });
 
-    it('Expects $() to own 44 properties.', () => {
-      expect(Object.getOwnPropertyNames(o.$())).to.be.an('array').that.has.lengthOf(44);
+    it('Expects $() to own 45 properties.', () => {
+      expect(Object.getOwnPropertyNames(o.$())).to.be.an('array').that.has.lengthOf(45);
     });
 
     it('Expects $() to own the property "0" that is null.', () => {
@@ -210,6 +210,10 @@ module.exports = function(View) {
 
     it('Expects $() to own the property "trigger" that is a function.', () => {
       expect(o.$().trigger).to.be.a('function');
+    });
+
+    it('Expects $() to own the property "diff" that is a function.', () => {
+      expect(o.$().diff).to.be.a('function');
     });
   });
 };

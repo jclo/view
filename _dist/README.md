@@ -729,6 +729,8 @@ $().removeAttr(attribute)       | removes the attribute from the selected elemen
 
 $().animate(props, d, e, cb)    | changes dynamically the CSS attributes,
 
+$().diff(XMLString)             | updates the selected DOM elements that differ from the passed-in template and return this,
+
 $(el).on(event, listener)       | adds an event listener to the selected child and returns this.
 $(el).off(event, listener)      | removes the attached event listener from the selected child and returns this.
 ```

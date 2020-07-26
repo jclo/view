@@ -17,6 +17,7 @@ const test1 = require('./rendering_$_1')
     , test6 = require('./rendering_$_6')
     , test7 = require('./rendering_$_7')
     , test8 = require('./rendering_$_8')
+    , test9 = require('./rendering_$_9')
     ;
 
 
@@ -129,8 +130,8 @@ module.exports = function(View) {
       test5(View, app5);
       test6(View, app6);
       test7(View, app7);
-
       test8(View, 'appC9');
+      test9(View, 'appC10');
 
       //
     });

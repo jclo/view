@@ -49,6 +49,7 @@ import C from './component/main';
 import R from './renderer/main';
 import _ from './lib/_';
 import Hyperscript from './component/hyperscript';
+import Differ from './component/diffing';
 
 
 // -- Local Constants
@@ -74,7 +75,7 @@ const View = {
    * @since 0.0.0
    */
   _setTestMode() {
-    return [_, C.Component, Hyperscript];
+    return [_, C.Component, Hyperscript, Differ];
   },
 
 
