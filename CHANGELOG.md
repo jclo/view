@@ -9,6 +9,7 @@
   * Second release candidate (beta.2),
   * Added the $().diff method,
   * Updated the dependencies,
+  * Third release candidate (beta.3),
   * ...,
 
 
