@@ -11,6 +11,7 @@
   * Updated the dependencies,
   * Third release candidate (beta.3),
   * Added the capability to build UMD and ES6 Modules,
+  * Fourth release candidate (beta.4),
   * ...,
 
 
