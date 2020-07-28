@@ -12,6 +12,7 @@
 /* global define */
 /* eslint no-shadow: ['error', { 'allow': ['root'] }] */
 /* eslint strict: ["error", "function"] */
+const $__ES6GLOB = {};
 (function(root, factory) {
   'use strict';
 
@@ -30,7 +31,7 @@
     /* eslint-disable-next-line no-param-reassign */
     root.View = factory(root);
   }
-}(this, (root) => {
+}($__ES6GLOB, (root) => {
   'use strict';
 
   /* ***************************************************************************
@@ -4154,3 +4155,6 @@
   // Returns the library name:
   return $__TREE.src.view;
 }));
+
+// -- Export
+export default $__ES6GLOB.View
