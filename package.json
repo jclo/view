@@ -1,6 +1,6 @@
 {
   "name": "@mobilabs/view",
-  "version": "0.0.8-beta.5",
+  "version": "0.0.8",
   "description": "A companion View library for building web applications",
   "main": "_dist/lib/view.js",
   "minified": "_dist/lib/view.min.js",

@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * View v0.0.8-beta.5
+ * View v0.0.8
  *
  * A companion View library for building web applications.
  * (you can download it from npm or github repositories)
@@ -241,7 +241,7 @@ const $__ES6GLOB = {};
     };
 
     // Attaches a constant to View that provides the version of the lib.
-    View.VERSION = '0.0.8-beta.5';
+    View.VERSION = '0.0.8';
 
 
     // -- Export

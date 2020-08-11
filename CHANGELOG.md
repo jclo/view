@@ -13,7 +13,7 @@
   * Added the capability to build UMD and ES6 Modules,
   * Fourth release candidate,
   * Updated the project dependencies,
-  * ...,
+  * Release.
 
 
 ### 0.0.7 (March 16, 2020)
