@@ -1,17 +1,18 @@
 ### HEAD
 
 
-### 0.0.8 (July 28, 2020)
+### 0.0.8 (August 11, 2020)
 
   * Updated the project with the boilerplate ES6Kadoo v0.0.0,
-  * First release candidate (beta.1),
+  * First release candidate,
   * Added more unitary tests,
-  * Second release candidate (beta.2),
+  * Second release candidate,
   * Added the $().diff method,
   * Updated the dependencies,
-  * Third release candidate (beta.3),
+  * Third release candidate,
   * Added the capability to build UMD and ES6 Modules,
-  * Fourth release candidate (beta.4),
+  * Fourth release candidate,
+  * Updated the project dependencies,
   * ...,
 
 

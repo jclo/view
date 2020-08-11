@@ -27,9 +27,9 @@ module.exports = function(View) {
     it('Expects View._setTestMode to be a function.', () => {
       expect(View._setTestMode).to.be.a('function');
     });
-    // it('Expects View._setTestMode() to return an object.', () => {
-    //   expect(View._setTestMode()).to.be.an('object');
-    // });
+    it('Expects View._setTestMode() to return an array with 4 items.', () => {
+      expect(View._setTestMode()).to.be.an('array').that.has.lengthOf(4);
+    });
 
     it('Expects View.noConflict to be a function.', () => {
       expect(View.noConflict).to.be.a('function');
