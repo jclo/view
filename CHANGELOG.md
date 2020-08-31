@@ -1,8 +1,9 @@
 ### HEAD
 
-### 0.0.9 (August 11, 2020)
+### 1.0.0 (August 31, 2020)
 
   * Updated travis.yml as suddenly Travis.CI fails,
+  * Updated the project dependencies,
   * ...,
 
 

@@ -1,6 +1,6 @@
 // ESLint declarations:
-/* global describe, it */
-/* eslint one-var: 0, no-unused-vars: 0, semi-style: 0, no-underscore-dangle: 0 */
+/* global describe */
+/* eslint one-var: 0, semi-style: 0 */
 
 
 // -- Vendor Modules
@@ -10,23 +10,23 @@ const { JSDOM }         = require('jsdom')
 
 
 // -- Local Modules
-const View = require('../src/view').default
-    , test_ = require('./int/lib/_')
-    , testview = require('./int/view')
+const // View = require('../index.js')
+    View = require('../src/view').default
+    // , pack     = require('../package.json')
+    , testlib  = require('./int/lib')
     , testrender1 = require('./int/renderer/render_1')
-
     , testcomp = require('./int/component/props')
     , test$ = require('./int/component/props$')
     , testcomp1 = require('./int/component/webcomp')
     , testhyper = require('./int/component/hyperscript')
     , testdiff = require('./int/component/diffing')
     , testcrender = require('./int/component/rendering')
-
     , testrender2 = require('./int/renderer/render_2')
     ;
 
 
 // -- Local Constants
+// const libname = 'View';
 
 
 // -- Local Variables
@@ -73,9 +73,18 @@ global.navigator = { userAgent: 'node.js' };
 global.XMLSerializer = XMLSerializer;
 global.DOMParser = dom.window.DOMParser;
 
-describe('Test View Library:', () => {
-  test_(View);
-  testview(View);
+// Nota:
+// If you choose 'View = require('../index')', 'display-coverage' will
+// show the coverage of all the library in one file.
+//
+// If you want to display the coverage file by file, you must choose
+// 'View = require('../src/prototypal').default'. But, in this case,
+// the build isn't done, so you should pass '{{lib:name}}' as libname and
+// '{{lib:version}}' as the library version.
+
+describe('Test View:', () => {
+  testlib(View, '{{lib:name}}', '{{lib:version}}', 'without new');
+  // testlib(View, libname, pack.version, 'without new');
 
   // test View.render
   testrender1(View);
@@ -90,5 +99,4 @@ describe('Test View Library:', () => {
 
   // test View.render/restore/remove/replace
   testrender2(View);
-  //
 });

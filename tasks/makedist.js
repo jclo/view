@@ -39,21 +39,24 @@ function deldist(done) {
 // Copies README and LICENSE.
 function doskeleton() {
   return src(['README.md', 'LICENSE.md'])
-    .pipe(dest(dist));
+    .pipe(dest(dist))
+  ;
 }
 
 // Copies the development version.
 function copydev() {
   return src(`${libdir}/${name}.js`)
     .pipe(header(license))
-    .pipe(dest(`${dist}/lib`));
+    .pipe(dest(`${dist}/lib`))
+  ;
 }
 
-// Copies the es6 development version.
-function copyes6dev() {
+// Copies the module development version.
+function copydevm() {
   return src(`${libdir}/${name}.mjs`)
     .pipe(header(license))
-    .pipe(dest(`${dist}/lib`));
+    .pipe(dest(`${dist}/lib`))
+  ;
 }
 
 // Creates the minified version.
@@ -63,17 +66,19 @@ function makeminified() {
     .pipe(uglify())
     .pipe(header(license))
     .pipe(concat(`${name}.min.js`))
-    .pipe(dest(`${dist}/lib`));
+    .pipe(dest(`${dist}/lib`))
+  ;
 }
 
-// Creates the minified version.
-function makees6minified() {
+// Creates the module minified version.
+function makeminifiedm() {
   return src(`${libdir}/${name}.mjs`)
     .pipe(replace('/*! ***', '/** ***'))
     .pipe(uglify())
     .pipe(header(license))
     .pipe(concat(`${name}.min.mjs`))
-    .pipe(dest(`${dist}/lib`));
+    .pipe(dest(`${dist}/lib`))
+  ;
 }
 
 
@@ -81,5 +86,5 @@ function makees6minified() {
 
 module.exports = series(
   deldist,
-  parallel(doskeleton, copydev, copyes6dev, makeminified, makees6minified),
+  parallel(doskeleton, copydev, copydevm, makeminified, makeminifiedm),
 );

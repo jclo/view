@@ -10,17 +10,17 @@
  * view.js is just a literal object that contains a set of functions. It
  * can't be intantiated.
  *
- *
  * Private Functions:
  *  . none,
  *
  *
  * Private Static Methods:
- *  . _setTestMode                returns the internal objects for testing purpose,
+ *  . _setTestMode                returns internal objects for testing purpose,
  *
  *
  * Public Static Methods:
  *  . noConflict                  returns a reference to this View object,
+ *  . whoami                      returns the library name and version,
  *  . Component                   returns the extended View component,
  *  . render                      renders a View into the DOM,
  *  . restore                     restores the View Component to its initial state,
@@ -61,17 +61,25 @@ const previousView = root.View;
 // -- Local Variables
 
 
+// -- Main -----------------------------------------------------------------
+
 const View = {
+
+  // Useful to retrieve the library name and version when it is
+  // embedded in another library as an object:
+  _library: { name: '{{lib:name}}', version: '{{lib:version}}' },
+
 
   // -- Private Static Methods ---------------------------------------------
 
   /**
    * Returns the internal objects for testing purpose.
+   * (must not be deleted)
    *
    * @method ()
    * @private
    * @param {}              -,
-   * @returns {Array}       returns internal objects,
+   * @returns {Object}      returns a list of internal objects,
    * @since 0.0.0
    */
   _setTestMode() {
@@ -83,9 +91,10 @@ const View = {
 
   /**
    * Returns a reference to this View object.
+   * (must not be deleted)
    *
    * Nota:
-   * Running View in noConflic mode, returns the View variable to
+   * Running View in no conflict mode, returns the View variable to
    * its previous owner.
    *
    * @method ()
@@ -94,11 +103,24 @@ const View = {
    * @returns {Object}      returns the View object,
    * @since 0.0.0
    */
-  /* istanbul ignore next */
   noConflict() {
     /* eslint-disable-next-line no-param-reassign */
     root.View = previousView;
     return this;
+  },
+
+  /**
+   * Returns the library name and version.
+   * (must not be deleted)
+   *
+   * @method ()
+   * @public
+   * @param {}              -,
+   * @returns {Object}      returns the library name and version,
+   * @since 0.0.0
+   */
+  whoami() {
+    return this._library;
   },
 
   /**
@@ -190,7 +212,8 @@ const View = {
   // },
 };
 
-// Attaches a constant to View that provides the version of the lib.
+// Attaches constants to View that provide name and version of the lib.
+View.NAME = '{{lib:name}}';
 View.VERSION = '{{lib:version}}';
 
 

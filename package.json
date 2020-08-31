@@ -1,6 +1,6 @@
 {
   "name": "@mobilabs/view",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "description": "A companion View library for building web applications",
   "main": "_dist/lib/view.js",
   "minified": "_dist/lib/view.min.js",
@@ -13,7 +13,7 @@
     "dev": "gulp rundev",
     "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --require esm ./test/main.js",
     "display-coverage": "opener ./coverage/lcov-report/index.html",
-    "check-coverage": "nyc check-coverage --statements 85 --branches 65 --functions 95 --lines 85",
+    "check-coverage": "nyc check-coverage --statements 85 --branches 70 --functions 95 --lines 85",
     "report-coverage": "nyc report --reporter=text-lcov | coveralls",
     "report": "nyc report",
     "makedist": "gulp makedist",
@@ -41,17 +41,15 @@
   },
   "homepage": "https://github.com/jclo/view",
   "dependencies": {
-    "@mobilabs/messenger": "0.0.5",
-    "build": "^0.1.4",
-    "npm": "^6.14.7",
-    "run": "^1.4.0"
+    "@mobilabs/messenger": "^1.0.0"
   },
   "devDependencies": {
+    "@mobilabs/es6kadoo": "1.0.2",
     "chai": "^4.2.0",
     "coveralls": "^3.1.0",
     "cross-env": "^7.0.2",
     "del": "^5.1.0",
-    "eslint": "^7.6.0",
+    "eslint": "^7.7.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
     "esm": "^3.2.25",
@@ -63,10 +61,10 @@
     "gulp-uglify-es": "^2.0.0",
     "husky": "^4.2.5",
     "jsdom": "^16.4.0",
-    "kadoo": "0.0.0-beta.6",
-    "mocha": "^8.1.1",
+    "kadoo": "^1.0.0",
+    "mocha": "^8.1.2",
     "nyc": "^15.1.0",
-    "open": "^7.1.0",
+    "open": "^7.2.0",
     "opener": "^1.5.1",
     "xmldom": "^0.3.0"
   },
