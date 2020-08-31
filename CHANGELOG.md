@@ -4,7 +4,7 @@
 
   * Updated travis.yml as suddenly Travis.CI fails,
   * Updated the project dependencies,
-  * ...,
+  * Release.
 
 
 ### 0.0.8 (August 11, 2020)
