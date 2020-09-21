@@ -8,6 +8,7 @@
     <style>
     </style>
     <script src="../lib/view.js"></script>
+    <script src="../node_modules/@mobilabs/messenger/_dist/lib/messenger.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         /* global View */
@@ -41,6 +42,7 @@
           },
         });
 
+        View.plugin({ messenger: Messenger });
         const view = View.render({
           el: '#app',
           children: { '<Aaa />': A, '<Bbb />': B },

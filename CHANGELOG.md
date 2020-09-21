@@ -1,5 +1,13 @@
 ### HEAD
 
+### 1.0.1 (September 21, 2020)
+
+  * Updated the project dependencies,
+  * Removed @mobilabs/messenger from the project,
+  * Added a plugin mechanism to link @mobilabs/messenger to @View,
+  * ...,
+
+
 ### 1.0.0 (August 31, 2020)
 
   * Updated travis.yml as suddenly Travis.CI fails,

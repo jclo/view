@@ -10,7 +10,7 @@ const { JSDOM }         = require('jsdom')
 
 
 // -- Local Modules
-const // View = require('../index.js')
+const // View = require('../index')
     View = require('../src/view').default
     // , pack     = require('../package.json')
     , testlib  = require('./int/lib')

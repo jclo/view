@@ -214,7 +214,9 @@ function _getProps(el, properties) {
       // Absolute or relative?
       if (suffix === '%') {
         // Relative, convert pixel value returned by 'getComputedStyle' in %:
-        cssParent = parseFloat(window.getComputedStyle(el.parentNode).getPropertyValue(name));
+        cssParent = parseFloat(
+          window.getComputedStyle(el.parentNode).getPropertyValue(name),
+        );
         cssValue = (cssValue / cssParent) * 100;
       }
       props[name] = {

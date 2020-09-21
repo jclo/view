@@ -27,6 +27,7 @@
  *  . append                      appends a child to a component,
  *  . prepend                     appends a child to a comp. before the first child,
  *  . remove                      removes a child from a component,
+ *  . plugin                      attaches a plugin,
  *
  *
  *
@@ -50,6 +51,7 @@ import R from './renderer/main';
 import _ from './lib/_';
 import Hyperscript from './component/hyperscript';
 import Differ from './component/diffing';
+import P from './plugin/main';
 
 
 // -- Local Constants
@@ -202,6 +204,19 @@ const View = {
    */
   remove(params) {
     return R.remove(params);
+  },
+
+  /**
+   * Attaches a plugin library.
+   *
+   * @method (arg1)
+   * @public
+   * @param {Object}        the plugin library,
+   * @returns {Boolean}     returns true if it succeeds,
+   * @since 0.0.0
+   */
+  plugin(plug) {
+    return P.plugin(plug);
   },
 
   //

@@ -73,6 +73,7 @@ import Util from './util';
 
 
 // -- Local Constants
+const IDLENGTH = 8;
 
 
 // -- Local Variables
@@ -117,7 +118,8 @@ const methods = {
 
     // init public:
     // Creates an unique id for this component:
-    this.id = `i${Math.random().toString(36).substr(2, 7)}`;
+    // this.id = `i${Math.random().toString(36).substr(2, 7)}`;
+    this.id = _.makeid(IDLENGTH);
     this.children = null;
     this.props = {};
     /* eslint-disable-next-line prefer-rest-params */
@@ -278,7 +280,12 @@ const methods = {
    * @since 0.0.0
    */
   $listen(event, listener) {
-    this._mess.subscribe(event, listener);
+    if (this._mess) {
+      this._mess.subscribe(event, listener);
+      return this;
+    }
+    /* eslint-disable-next-line no-console */
+    console.log('$listen: the plugin Messenger is not installed!');
     return this;
   },
 
@@ -294,7 +301,12 @@ const methods = {
    * @since 0.0.0
    */
   $emit(event, payload) {
-    this._mess.publish(event, payload);
+    if (this._mess) {
+      this._mess.publish(event, payload);
+      return this;
+    }
+    /* eslint-disable-next-line no-console */
+    console.log('$emit: the plugin Messenger is not installed!');
     return this;
   },
 

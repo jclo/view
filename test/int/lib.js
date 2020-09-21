@@ -13,7 +13,7 @@ const { expect } = require('chai')
 
 // -- Local Constants
 // Number of properties added by your library.
-const OWNPROPS = 6
+const OWNPROPS = 7
     , TESTMODE = 4
     ;
 
@@ -123,6 +123,10 @@ module.exports = function(View, libname, version) {
 
       it('Expects View to own the property "remove" that is a function.', () => {
         expect(View).to.own.property('remove').that.is.a('function');
+      });
+
+      it('Expects View to own the property "plugin" that is a function.', () => {
+        expect(View).to.own.property('plugin').that.is.a('function');
       });
 
 

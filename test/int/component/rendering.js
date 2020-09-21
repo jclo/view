@@ -6,7 +6,9 @@
 
 // -- Vendor Modules
 const { expect } = require('chai')
+    , Messenger  = require('@mobilabs/messenger')
     ;
+
 
 // -- Local Modules
 const rendering1 = require('./int/rendering_1')
@@ -41,6 +43,7 @@ module.exports = function(View) {
         },
       });
 
+      View.plugin({ messenger: Messenger });
       const app = View.render({
         el: '#appC1',
         children: { '<C />': C },

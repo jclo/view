@@ -39,12 +39,12 @@
 
 
 // -- Vendor Modules
-import Messenger from '@mobilabs/messenger';
 
 
 // -- Local Modules
 import V from '../component/main';
 import _ from '../lib/_';
+import P from '../plugin/main';
 
 
 // -- Local Constants
@@ -176,7 +176,9 @@ function _attachTemplateDOM(opt) {
  * @since 0.0.0
  */
 function _componenterize(options) {
-  const opt = _filter(options);
+  const opt       = _filter(options)
+      , Messenger = P.get('messenger')
+      ;
 
   // Check if the node exists in the DOM. if not return null.
   if (opt.el === 'body') return null;
@@ -229,7 +231,7 @@ function _componenterize(options) {
   // and return it.
   // The XML string of the initial node is saved because View provides a
   // method View.restore to returns the node to its initial state.
-  view._mess = Messenger();
+  view._mess = Messenger ? Messenger() : null;
   view._initialXMLNode = xmlNode0;
   return view;
 }
@@ -244,7 +246,8 @@ function _componenterize(options) {
  * @since 0.0.0
  */
 function _render(options) {
-  const opt = _filter(options)
+  const opt       = _filter(options)
+      , Messenger = P.get('messenger')
       ;
 
   if (!options.children && !options.template) {
@@ -272,7 +275,7 @@ function _render(options) {
   _attachTemplateDOM(opt);
 
   // Attach the messenger broker to the firstparent and all childs:
-  rootc._mess = Messenger();
+  rootc._mess = Messenger ? Messenger() : null;
   _attachMessenger(rootc, rootc._mess);
 
   // Now all the components are attached to the DOM, fire the DOM events
