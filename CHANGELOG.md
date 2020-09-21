@@ -5,7 +5,7 @@
   * Updated the project dependencies,
   * Removed @mobilabs/messenger from the project,
   * Added a plugin mechanism to link @mobilabs/messenger to @View,
-  * ...,
+  * Release.
 
 
 ### 1.0.0 (August 31, 2020)
