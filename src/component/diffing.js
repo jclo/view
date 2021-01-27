@@ -22,7 +22,7 @@
  *
  * Public Static Methods:
  *  . stringToHTML                converts an XML String to an HTML object,
- * . diff                         updates the outdated elements of the DOM node,
+ *  . diff                        updates the outdated elements of the DOM node,
  *
  *
  *

@@ -11,9 +11,7 @@ const { JSDOM }         = require('jsdom')
 
 // -- Local Modules
 const // View = require('../index')
-    View = require('../src/view').default
-    // , pack     = require('../package.json')
-    , testlib  = require('./int/lib')
+    testlib  = require('./int/lib')
     , testrender1 = require('./int/renderer/render_1')
     , testcomp = require('./int/component/props')
     , test$ = require('./int/component/props$')
@@ -68,6 +66,7 @@ const HTML = `
 
 const dom = new JSDOM(HTML);
 global.window = dom.window;
+global.root = dom.window;
 global.document = dom.window.document;
 global.navigator = { userAgent: 'node.js' };
 global.XMLSerializer = XMLSerializer;
@@ -81,6 +80,7 @@ global.DOMParser = dom.window.DOMParser;
 // 'View = require('../src/prototypal').default'. But, in this case,
 // the build isn't done, so you should pass '{{lib:name}}' as libname and
 // '{{lib:version}}' as the library version.
+const View = require('../src/view').default;
 
 describe('Test View:', () => {
   testlib(View, '{{lib:name}}', '{{lib:version}}', 'without new');

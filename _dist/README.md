@@ -644,6 +644,7 @@ restore(view),                  | restores the DOM to its initial state,
 append({...})                   | adds a component to a defined component as the last child,
 prepend({...})                  | adds a component to a defined component as the first child,
 remove({...})                   | removes a component from a defined component,
+plugin({name, ref})             | attaches a plugin,
 ```
 
 
